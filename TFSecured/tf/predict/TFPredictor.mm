@@ -55,14 +55,7 @@ using namespace tensorflow;
     }
 }
 
-
-//- (void)predictImage:(UIImage*)image {
-//    Tensor in;
-//    toTensor(image, &in);
-//    [self predictTensor: in];
-//}
-
-- (void)predictTensor:(const Tensor&)input {
+- (void)predictTensor:(const Tensor&)input output: (Tensor*)output {
     SessionOptions options;
     Status status;
     std::unique_ptr<Session> session(NewSession(options));
@@ -90,8 +83,7 @@ using namespace tensorflow;
         std::cout << "Outputs is empty!" << "\n";
         return;
     }
-    const tensorflow::Tensor &outTensor = outputs[0];
-    
+    *output = outputs[0];
 }
 
 

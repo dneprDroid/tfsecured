@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
 		22C03CEA209A5F330018285A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE9209A5F330018285A /* ViewController.swift */; };
 		22C03CED209A5F330018285A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22C03CEB209A5F330018285A /* Main.storyboard */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
+		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
 		22C03CE4209A5F330018285A /* TFSecured.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFSecured.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22C03CE7209A5F330018285A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22C03CE9209A5F330018285A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 			children = (
 				22D781FD209B0DEA00666838 /* TFPredictor.h */,
 				22D781FE209B0E1E00666838 /* TFPredictor.mm */,
+				22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */,
+				22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */,
 			);
 			path = predict;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 			files = (
 				22D781F7209AFFF700666838 /* SecMatmulOp.cpp in Sources */,
 				22D78203209B10B100666838 /* NSError+Util.m in Sources */,
+				22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */,
 				22C03CEA209A5F330018285A /* ViewController.swift in Sources */,
 				22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */,
 				22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */,
