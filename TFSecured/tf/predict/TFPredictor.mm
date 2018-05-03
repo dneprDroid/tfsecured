@@ -19,7 +19,7 @@
 using namespace tensorflow;
 
 @interface TFPredictor () {
-    GraphDef *graph;
+    GraphDef graph;
     std::string inNode;
     std::string outNode;
 }
@@ -34,17 +34,17 @@ using namespace tensorflow;
            inputNodeName:(NSString*)inNode
           outputNodeName:(NSString*)outNode {
     
-    TFPredictor *pred = [TFPredictor new];
+    TFPredictor *pred = [self new];
     pred.modelPath = modelPath;
-    pred->inNode = "";
-    pred->outNode = "";
+    pred->inNode  = std::string([inNode cStringUsingEncoding:NSUTF8StringEncoding]);
+    pred->outNode = std::string([outNode cStringUsingEncoding:NSUTF8StringEncoding]);
     return pred;
 }
 
 
 - (void)loadModel:(nullable TFErrorCallback) callback {
     const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
-    auto status = ReadBinaryProto(tensorflow::Env::Default(), path, graph);
+    auto status = ReadBinaryProto(tensorflow::Env::Default(), path, &graph);
     if (!status.ok()) {
         printf("Error reading graph: %s\n", status.error_message().c_str());
         if (callback)
@@ -55,14 +55,7 @@ using namespace tensorflow;
     }
 }
 
-
-//- (void)predictImage:(UIImage*)image {
-//    Tensor in;
-//    toTensor(image, &in);
-//    [self predictTensor: in];
-//}
-
-- (void)predictTensor:(const Tensor&)input {
+- (void)predictTensor:(const Tensor&)input output: (Tensor*)output {
     SessionOptions options;
     Status status;
     std::unique_ptr<Session> session(NewSession(options));
@@ -71,7 +64,7 @@ using namespace tensorflow;
         return;
     }
     
-    status = session->Create(*graph);
+    status = session->Create(graph);
     if (!status.ok()) {
         printf("Error adding graph to session: %s\n", status.error_message().c_str());
         return;
@@ -90,13 +83,12 @@ using namespace tensorflow;
         std::cout << "Outputs is empty!" << "\n";
         return;
     }
-    const tensorflow::Tensor &outTensor = outputs[0];
-    
+    *output = outputs[0];
 }
 
 
 - (void)dealloc {
-    delete graph;
+    printf("...... dealloc ......\n");
 }
 
 @end

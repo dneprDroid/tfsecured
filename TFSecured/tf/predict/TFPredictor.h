@@ -8,12 +8,34 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIImage.h>
+#include "UtilHeaders.h"
+
+#ifdef __cplusplus
+
+#include <tensorflow/core/framework/tensor.h>
+
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^TFErrorCallback)(NSError *error);
 
 @interface TFPredictor : NSObject
+
+
+
++ (instancetype)initWith:(NSString*)modelPath
+           inputNodeName:(NSString*)inNode
+          outputNodeName:(NSString*)outNode;
+
+
+- (void)loadModel:(nullable TFErrorCallback) callback;
+
+#ifdef __cplusplus
+
+- (void)predictTensor:(const tensorflow::Tensor&)input output: (tensorflow::Tensor*)output;
+
+#endif
 
 @end
 

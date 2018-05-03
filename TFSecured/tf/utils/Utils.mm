@@ -36,9 +36,9 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     CGContextRelease(context);
     CFRelease(ref);
     
-    *outTensor = tensorflow::Tensor(tensorflow::DT_FLOAT,
+    *outTensor = tensorflow::Tensor(tensorflow::DT_INT32,
                                     tensorflow::TensorShape({1, height, width, channels}));
-    auto input_tensor_mapped = outTensor->tensor<float, 4>();
+    auto input_tensor_mapped = outTensor->tensor<int32_t, 4>();
     const tensorflow::int8 * source_data = imageBytes.data();
     
     for (int y = 0; y < height; ++y) {
@@ -47,9 +47,9 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
         for (int x = 0; x < width; ++x) {
             const tensorflow::int8* source_pixel = source_row + (x * channels);
             
-            float r = source_pixel[2];
-            float g = source_pixel[1];
-            float b = source_pixel[0];
+            int32_t r = source_pixel[2];
+            int32_t g = source_pixel[1];
+            int32_t b = source_pixel[0];
             
             
             input_tensor_mapped(0, y, x, 0) = r;
