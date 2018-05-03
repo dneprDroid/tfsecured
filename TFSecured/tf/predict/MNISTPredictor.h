@@ -12,8 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MNISTPredictor : TFPredictor
 
+- (NSUInteger)predictImage:(UIImage*)image
 
-- (void)predictImage:(UIImage*)image;
+   NS_SWIFT_NAME(predict(image:));
 
 
 @end

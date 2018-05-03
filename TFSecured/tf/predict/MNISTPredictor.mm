@@ -23,11 +23,16 @@ using namespace tensorflow;
 
 @implementation MNISTPredictor
 
-- (void)predictImage:(UIImage*)image {
+
+- (NSUInteger)predictImage:(UIImage*)image {
     Tensor in;
     toTensor(image, &in);
+    std::cout << "Input tensor shape: " << in.shape().DebugString() << "\n";
     Tensor out;
     [self predictTensor:in output:&out];
+    std::cout << "Output tensor shape: " << out.shape().DebugString() << "\n";
+    auto flatTensor = out.flat<float>();
+    return (NSUInteger)flatTensor(0);
 }
 
 
