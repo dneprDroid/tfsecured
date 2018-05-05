@@ -17,5 +17,7 @@
 
 extern NSString* NSStringFromCString(const char *str);
 
-
 void toTensor(UIImage *img, tensorflow::Tensor *outTensor);
+
+
+void getBytes(UIImage *in, std::vector<unsigned char> &imageBytes);

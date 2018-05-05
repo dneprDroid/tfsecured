@@ -63,15 +63,18 @@ using namespace tensorflow;
         printf("Error creating session: %s\n", status.error_message().c_str());
         return;
     }
-#if DEBUG
-    for (const NodeDef& node : graph.node()) {
-        auto size = node.attr();
-        std::cout << "Node: " << node.name()
-                  << ",\n     op: " << node.op()
-                  << " size: " << size.begin()->first << ","
-        << size.begin()->second.DebugString() << "\n";
-    }
-#endif
+    
+//#if DEBUG
+//    for (const NodeDef& node : graph.node()) {
+//        auto size = node.attr();
+//        std::cout << "Node: " << node.name()
+//                  << ",\n     op: " << node.op()
+//                  << " size: " << size.begin()->first << ","
+//        << size.begin()->second.DebugString() << "\n";
+//    }
+//#endif
+    
+    
     status = session->Create(graph);
     if (!status.ok()) {
         printf("Error adding graph to session: %s\n", status.error_message().c_str());

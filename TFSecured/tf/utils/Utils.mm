@@ -16,6 +16,29 @@ NSString* NSStringFromCString(const char *str) {
     return [[NSString alloc]initWithUTF8String:str];
 }
 
+void getBytes(UIImage *in, std::vector<unsigned char> &imageBytes) {
+    CGImageRef ref = [in CGImage];
+    const int width = (int)CGImageGetWidth(ref);
+    const int height = (int)CGImageGetHeight(ref);
+    const int channels = 4;
+    const int bytes_per_row = (width * channels);
+    const int bytes_in_image = (bytes_per_row * height);
+    const int bits_per_component = 8;
+
+    CGColorSpaceRef color_space = CGColorSpaceCreateDeviceRGB();
+  
+    CGContextRef context = CGBitmapContextCreate(imageBytes.data(),
+                                                 width,
+                                                 height,
+                                                 bits_per_component,
+                                                 bytes_per_row, color_space,
+                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(color_space);
+    CGContextDrawImage(context, CGRectMake(0, 0, width, height), ref);
+    CGContextRelease(context);
+//    CFRelease(ref);
+}
+
 void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     CGImageRef ref = [img CGImage];
     const int width = (int)CGImageGetWidth(ref);
@@ -27,7 +50,8 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     std::vector<tensorflow::uint8> imageBytes(bytes_in_image);
     const int bits_per_component = 8;
     CGContextRef context = CGBitmapContextCreate(imageBytes.data(),
-                                                 width, height,
+                                                 width,
+                                                 height,
                                                  bits_per_component,
                                                  bytes_per_row, color_space,
                                                  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
@@ -37,7 +61,7 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     CFRelease(ref);
     
     *outTensor = tensorflow::Tensor(tensorflow::DT_FLOAT,
-                                    tensorflow::TensorShape({1, height, width, channels}));
+                                    tensorflow::TensorShape({1, height, width, 3}));
     auto input_tensor_mapped = outTensor->tensor<float, 4>();
     const tensorflow::uint8 * source_data = imageBytes.data();
     
