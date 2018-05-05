@@ -18,4 +18,4 @@
 extern NSString* NSStringFromCString(const char *str);
 
 
-extern void toTensor(UIImage *img, tensorflow::Tensor *outTensor);
+void toTensor(UIImage *img, tensorflow::Tensor *outTensor);

@@ -9,7 +9,7 @@
 #import "MNISTPredictor.h"
 
 #import "NSError+Util.h"
-#import "Utils.h"
+#import "Utils.hpp"
 
 
 #include <tensorflow/core/framework/op.h>

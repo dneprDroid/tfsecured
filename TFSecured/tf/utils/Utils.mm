@@ -6,7 +6,7 @@
 //  Copyright © 2018 user. All rights reserved.
 //
 
-#import "Utils.h"
+#import "Utils.hpp"
 #include <tensorflow/core/framework/op.h>
 #include <tensorflow/core/framework/op_kernel.h>
 #include <tensorflow/core/framework/shape_inference.h>
@@ -24,7 +24,7 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     CGColorSpaceRef color_space = CGColorSpaceCreateDeviceRGB();
     const int bytes_per_row = (width * channels);
     const int bytes_in_image = (bytes_per_row * height);
-    std::vector<tensorflow::int8> imageBytes(bytes_in_image);
+    std::vector<tensorflow::uint8> imageBytes(bytes_in_image);
     const int bits_per_component = 8;
     CGContextRef context = CGBitmapContextCreate(imageBytes.data(),
                                                  width, height,
@@ -36,20 +36,20 @@ void toTensor(UIImage *img, tensorflow::Tensor *outTensor) {
     CGContextRelease(context);
     CFRelease(ref);
     
-    *outTensor = tensorflow::Tensor(tensorflow::DT_INT32,
+    *outTensor = tensorflow::Tensor(tensorflow::DT_FLOAT,
                                     tensorflow::TensorShape({1, height, width, channels}));
-    auto input_tensor_mapped = outTensor->tensor<int32_t, 4>();
-    const tensorflow::int8 * source_data = imageBytes.data();
+    auto input_tensor_mapped = outTensor->tensor<float, 4>();
+    const tensorflow::uint8 * source_data = imageBytes.data();
     
     for (int y = 0; y < height; ++y) {
-        const tensorflow::int8* source_row = source_data + (y * width * channels);
+        const tensorflow::uint8* source_row = source_data + (y * width * channels);
         
         for (int x = 0; x < width; ++x) {
-            const tensorflow::int8* source_pixel = source_row + (x * channels);
+            const tensorflow::uint8* source_pixel = source_row + (x * channels);
             
-            int32_t r = source_pixel[2];
-            int32_t g = source_pixel[1];
-            int32_t b = source_pixel[0];
+            float r = source_pixel[2];
+            float g = source_pixel[1];
+            float b = source_pixel[0];
             
             
             input_tensor_mapped(0, y, x, 0) = r;
