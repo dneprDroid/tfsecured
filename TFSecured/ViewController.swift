@@ -20,16 +20,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        recognize(image: #imageLiteral(resourceName: "nine"))
+    }
+    
+    
+    private func recognize(image: UIImage) {
         DispatchQueue.global().async {
+            
             let modelPath = Bundle.main.path(forResource: "saved_model", ofType: "pb")!
             let predictor = MNISTPredictor.initWith(modelPath,
                                                     inputNodeName: INPUT_NODE_NAME,
                                                     outputNodeName: OUTPUT_NODE_NAME)
             predictor.loadModel(nil)
-            let inputImage =  #imageLiteral(resourceName: "nine").resize(targetSize: CGSize(width: IMAGE_SIDE_SIZE, height: IMAGE_SIDE_SIZE))
-            let digit = predictor.predict(image: inputImage)
-            print("Recognized Digit: \(digit)")
+            let inputImage =  image.resize(targetSize: CGSize(width: IMAGE_SIDE_SIZE,
+                                                              height: IMAGE_SIDE_SIZE))
+            predictor.predict(image: inputImage,
+                              success: { digit in
+                print("Recognized Digit: \(digit)")
+            }, error: {
+                print("Error")
+            })
+            
         }
     }
 }

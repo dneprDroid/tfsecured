@@ -62,7 +62,9 @@ using namespace tensorflow;
 @implementation MNISTPredictor
 
 
-- (NSUInteger)predictImage:(UIImage*)image {
+- (void)predictImage:(UIImage*)image
+             success:(MNISTSuccessCallback)success
+               error:(MNISTErrorCallback)error {
     const long width = image.size.width;
     const long height = image.size.height;
 
@@ -77,19 +79,31 @@ using namespace tensorflow;
     std::cout << "Input tensor shape: " << in.shape().DebugString() << "\n";
     Tensor out;
     [self predictTensor:in output:&out];
+    
     std::cout << "Output tensor shape: " << out.shape().DebugString() << "\n";
+    
     auto flatTensor = out.flat<float>();
-    NSUInteger digit = -1;
+    NSInteger digit = MNIST_IMAGE_NOT_RECOGNIZED;
     float digitProb = 0;
     
     for (int i=0; i < flatTensor.size(); ++i) {
         float prob = flatTensor(i);
+        std::cout << "Probability for digit " << (i + 1) << " = " << prob << "\n";
         if (prob > digitProb) {
+            digitProb = prob;
             digit = (i + 1);
         }
     }
-    return (NSUInteger)digit;
+    if (digit == MNIST_IMAGE_NOT_RECOGNIZED) {
+        error();
+        return;
+    }
+    success(digit);
+    return;
 }
 
+- (void)dealloc {
+    printf("MNISTPredictor dealloc.\n");
+}
 
 @end

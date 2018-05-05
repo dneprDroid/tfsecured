@@ -9,12 +9,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+enum {
+    MNIST_IMAGE_NOT_RECOGNIZED = -1
+};
+
+typedef void(^MNISTSuccessCallback)(NSUInteger digit);
+typedef void(^MNISTErrorCallback)();
 
 @interface MNISTPredictor : TFPredictor
 
-- (NSUInteger)predictImage:(UIImage*)image
+- (void)predictImage:(UIImage*)image
+             success:(MNISTSuccessCallback)success
+               error:(MNISTErrorCallback)error
 
-   NS_SWIFT_NAME(predict(image:));
+NS_SWIFT_NAME(predict(image:success:error:));
 
 
 @end
