@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2236F7B020CAA76D006B02DB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7AF20CAA76D006B02DB /* aes.c */; };
+		2236F7B320CAA8F4006B02DB /* AESEncryptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC10209BA3D900B6E2A3 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BDBC0F209BA3C500B6E2A3 /* saved_model.pb */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
@@ -24,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2236F7AD20CAA76D006B02DB /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		2236F7AE20CAA76D006B02DB /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
+		2236F7AF20CAA76D006B02DB /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
+		2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AESEncryptor.cpp; sourceTree = "<group>"; };
+		2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AESEncryptor.hpp; sourceTree = "<group>"; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
 		22BDBC0F209BA3C500B6E2A3 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
@@ -72,6 +79,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2236F7AC20CAA767006B02DB /* encryption */ = {
+			isa = PBXGroup;
+			children = (
+				2236F7AF20CAA76D006B02DB /* aes.c */,
+				2236F7AD20CAA76D006B02DB /* aes.h */,
+				2236F7AE20CAA76D006B02DB /* aes.hpp */,
+				2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */,
+				2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */,
+			);
+			path = encryption;
+			sourceTree = "<group>";
+		};
 		22BDBC0E209BA3B500B6E2A3 /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +137,7 @@
 		22C03CF9209A5F3E0018285A /* tf */ = {
 			isa = PBXGroup;
 			children = (
+				2236F7AC20CAA767006B02DB /* encryption */,
 				22D781FC209B0B8E00666838 /* predict */,
 				22D781F8209B0ACD00666838 /* utils */,
 				22C03CFA209A5F470018285A /* ops */,
@@ -187,8 +207,6 @@
 				22C03CE0209A5F330018285A /* Sources */,
 				22C03CE1209A5F330018285A /* Frameworks */,
 				22C03CE2209A5F330018285A /* Resources */,
-				F70D92421CCBFA821B74AA5A /* [CP] Embed Pods Frameworks */,
-				FB55C20FB7195B44615A9605 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,36 +285,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F70D92421CCBFA821B74AA5A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TFSecured/Pods-TFSecured-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB55C20FB7195B44615A9605 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TFSecured/Pods-TFSecured-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -307,7 +295,9 @@
 				22D781F7209AFFF700666838 /* SecMatmulOp.cpp in Sources */,
 				22D78203209B10B100666838 /* NSError+Util.m in Sources */,
 				22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */,
+				2236F7B020CAA76D006B02DB /* aes.c in Sources */,
 				22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */,
+				2236F7B320CAA8F4006B02DB /* AESEncryptor.cpp in Sources */,
 				22C03CEA209A5F330018285A /* ViewController.swift in Sources */,
 				22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */,
 				22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */,
