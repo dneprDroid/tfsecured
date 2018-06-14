@@ -71,13 +71,13 @@ namespace tf_secured {
             const uint32_t content_size = (uint32_t)mutable_tensor->ByteSizeLong();
             
             
-            std::vector<uint8_t> iv_bytes(tensor_content.begin(),
-                                          tensor_content.begin() + AES_INIT_VECTOR_SIZE);
+            const std::vector<uint8_t> iv_bytes(tensor_content.begin(),
+                                                tensor_content.begin() + AES_INIT_VECTOR_SIZE);
 
             AES_init_ctx_iv(&aesCtx, keyByteArray.data(), iv_bytes.data());
             
-            const std::vector<uint8_t> tensor_bytes = decrypt(&aesCtx, tensor_content, content_size);
-            mutable_tensor->set_tensor_content(tensor_bytes.data(), tensor_bytes.size());
+            const std::vector<uint8_t> decrypted_tensor = decrypt(&aesCtx, tensor_content, content_size);
+            mutable_tensor->set_tensor_content(decrypted_tensor.data(), decrypted_tensor.size());
             
 #ifdef DEBUG
             std::cout   << "Node: " << node.name()
