@@ -32,6 +32,7 @@
 		2236F7AF20CAA76D006B02DB /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
 		2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AESEncryptor.cpp; sourceTree = "<group>"; };
 		2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AESEncryptor.hpp; sourceTree = "<group>"; };
+		2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
 		22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "saved_model-encrypted.pb"; path = "python/models/saved_model-encrypted.pb"; sourceTree = SOURCE_ROOT; };
 		22BAF34120D269430014DCC9 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
 		22BAF34320D2707B0014DCC9 /* picosha2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
@@ -91,6 +92,7 @@
 				2236F7AE20CAA76D006B02DB /* aes.hpp */,
 				2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */,
 				2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */,
+				2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */,
 			);
 			path = encryption;
 			sourceTree = "<group>";
