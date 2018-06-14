@@ -17,6 +17,8 @@
 #include <tensorflow/core/framework/shape_inference.h>
 #include <iostream>
 #include <fstream>
+#include "../encryption/picosha2.hpp"
+#include "../encryption/aes.hpp"
 
 using namespace tensorflow;
 
@@ -58,18 +60,41 @@ using namespace tensorflow;
         return;
     }
 
+
+
+    // Begin decryption:
+    const std::string KEY = "JREH79XW7QKGX346LKU8MRM9SYM998";
+    std::array<uint8_t, 32> hashKey;
+
+    picosha2::hash256_bytes(KEY, hashKey);
+    
+    
+    #define AES_block_size 16
+    
     for (NodeDef& node : *graph.mutable_node()) {
+        
         if (node.op() != "Const") continue;
         auto attr = node.mutable_attr();
         if (attr->count("value") == 0) continue;
         
         auto mutable_tensor = attr->at("value").mutable_tensor();
-        const auto &content = mutable_tensor->tensor_content();
-        //TODO: Decryption:
-        //        mutable_tensor->set_tensor_content(/* THIS */);
+        const std::string &content = mutable_tensor->tensor_content();
+        const uint32_t content_size = (uint32_t)mutable_tensor->ByteSizeLong();
+        
+        
+        AES_ctx _aesCtx;
+        std::vector<uint8_t> iv_bytes(content.begin(), content.begin() + AES_block_size);
+        std::cout << "iv_bytes size: " << iv_bytes.size() << std::endl;
+        AES_init_ctx_iv(&_aesCtx, hashKey.data(), iv_bytes.data());
+        
+        std::vector<uint8_t> bytes(content.begin() + AES_block_size, content.end());
+        AES_CBC_decrypt_buffer(&_aesCtx, bytes.data(), content_size-AES_block_size);
+        const size_t byte_size = bytes.size();
+        size_t index = byte_size - (int)bytes[byte_size - 1];
+        mutable_tensor->set_tensor_content(bytes.data(), index);
         std::cout   << "Node: " << node.name()
                     << ",\n     op: " << node.op()
-                    << "\n content size: " << content.size() << "\n";
+                    << "\n content size (" << content_size << "): " << content.size() << "\n";
     }
     // Save Model:
     //    std::fstream file;

@@ -18,21 +18,26 @@ except:
 
 class AESCipher(object):
     
-    def __init__(self, key):
+    def __init__(self, _key):
         self.bs = 32
-        self.key = hashlib.sha256(key.encode()).digest()
-
+        self.key = hashlib.sha256(_key.encode()).digest()
+        print('Hash Key: %s' %  self.key)
+    
     def encrypt(self, raw):
         raw = self._pad(raw)
+        print('Raw (size=%s)' % (AES.block_size))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(raw))
+#        return base64.b64encode(iv + cipher.encrypt(raw))
+        return (iv + cipher.encrypt(raw))
+
     
     def decrypt(self, enc):
-        enc = base64.b64decode(enc)
+#        enc = base64.b64decode(enc)
         iv = enc[:AES.block_size]
+        print('Iv: %s' % iv)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
+        return self._unpad(cipher.decrypt(enc[AES.block_size:]))#.decode('utf-8')
     
     def _pad(self, s):
         return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)
@@ -84,7 +89,7 @@ print('\nUSAGE: %s\n' % USAGE)
 INPUT_PATH      = read_arg(1, default='/Users/useruser/Desktop/TFSecured/python/models/saved_model.pb')
 default_out     = generate_output_path(INPUT_PATH, '-encrypted')
 OUTPUT_PATH     = read_arg(2, default=default_out)
-KEY             = read_arg(3, default=random_string())
+KEY             = read_arg(3, default="JREH79XW7QKGX346LKU8MRM9SYM998")
 
 
 
@@ -98,7 +103,16 @@ for node in graph_def.node:
         continue
     print('Encrypting tensor content of "%s" with %s...' % (node.name, node.attr['dtype']))
     tensor_content = node.attr['value'].tensor.tensor_content
-#    node.attr['value'].tensor.tensor_content = cipher.encrypt(tensor_content)
+    old_tensor_size = len(tensor_content)
+    print('Tensor values: "%s"  (size=%s)' % (tensor_content[:10], old_tensor_size))
+    tensor_content = cipher.encrypt(tensor_content)
+    print('Tensor encrypted values: "%s"  (size=%s)' % (tensor_content[:10], len(tensor_content)))
+    print('Size diff: %s' % (len(tensor_content) - old_tensor_size))
+
+#    tensor_content = cipher.decrypt(tensor_content)
+#    print('Tensor decrypted values: "%s"' % (tensor_content[:10]))
+
+    node.attr['value'].tensor.tensor_content = tensor_content
 
 nodes_binary_str = graph_def.SerializeToString()
 
