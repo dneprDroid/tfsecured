@@ -9,7 +9,7 @@ try:
     from Crypto import Random
     from Crypto.Cipher import AES
 except:
-    raise Exception('Install Crypto!')
+    raise Exception('Install Crypto! \n pip install pycrypto ')
 try:
     import tensorflow as tf
 except:
