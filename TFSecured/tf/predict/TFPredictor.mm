@@ -18,6 +18,7 @@
 #include <iostream>
 #include <fstream>
 #include "../encryption/GraphDefDecryptor.hpp"
+#include "../encryption/OpDecryptor.hpp"
 
 using namespace tensorflow;
 
@@ -59,6 +60,7 @@ using namespace tensorflow;
         return;
     }
     tf_secured::GraphDefDecrypt(graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
+    tf_secured::DecryptOpsNames(graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
 }
 
 - (void)predictTensor:(const Tensor&)input output: (Tensor*)output {

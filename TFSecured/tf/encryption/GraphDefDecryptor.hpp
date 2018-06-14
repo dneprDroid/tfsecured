@@ -32,8 +32,15 @@ namespace tf_secured {
 
     
     inline const std::vector<uint8_t> decrypt(struct AES_ctx *ctx,
+                                              const std::array<uint8_t, 32> &keyByteArray,
                                               const std::string& tensor_content,
                                               const uint32_t content_size) {
+        
+        const std::vector<uint8_t> iv_bytes(tensor_content.begin(),
+                                            tensor_content.begin() + AES_INIT_VECTOR_SIZE);
+        
+        AES_init_ctx_iv(ctx, keyByteArray.data(), iv_bytes.data());
+        
         std::vector<uint8_t> tensor_bytes(tensor_content.begin() + AES_INIT_VECTOR_SIZE,
                                           tensor_content.end());
         
@@ -61,7 +68,11 @@ namespace tf_secured {
         AES_ctx aesCtx;
 
         for (NodeDef& node : *graph.mutable_node()) {
-            
+#ifdef DEBUG
+            std::cout   << "Node: " << node.name()
+                        << ",\n     op: " << node.op() << std::endl;
+#endif
+
             if (node.op() != "Const") continue;
             auto attr = node.mutable_attr();
             if (attr->count("value") == 0) continue;
@@ -70,21 +81,11 @@ namespace tf_secured {
             const std::string &tensor_content = mutable_tensor->tensor_content();
             const uint32_t content_size = (uint32_t)mutable_tensor->ByteSizeLong();
             
-            
-            const std::vector<uint8_t> iv_bytes(tensor_content.begin(),
-                                                tensor_content.begin() + AES_INIT_VECTOR_SIZE);
-
-            AES_init_ctx_iv(&aesCtx, keyByteArray.data(), iv_bytes.data());
-            
-            const std::vector<uint8_t> decrypted_tensor = decrypt(&aesCtx, tensor_content, content_size);
+            const std::vector<uint8_t> decrypted_tensor = decrypt(&aesCtx,
+                                                                  keyByteArray,
+                                                                  tensor_content,
+                                                                  content_size);
             mutable_tensor->set_tensor_content(decrypted_tensor.data(), decrypted_tensor.size());
-            
-#ifdef DEBUG
-            std::cout   << "Node: " << node.name()
-                        << ",\n     op: " << node.op()
-                        << "\n content size (" << content_size << "): " << tensor_content.size() << "\n";
-#endif
-            
         }
         // Save Model:
         //    std::fstream file;
