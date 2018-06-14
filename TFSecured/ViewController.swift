@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     private func recognize(image: UIImage) {
         DispatchQueue.global().async {
             
-            let modelPath = Bundle.main.path(forResource: "saved_model", ofType: "pb")!
+            let modelPath = Bundle.main.path(forResource: "saved_model-encrypted", ofType: "pb")!
             let predictor = MNISTPredictor.initWith(modelPath,
                                                     inputNodeName: INPUT_NODE_NAME,
                                                     outputNodeName: OUTPUT_NODE_NAME)

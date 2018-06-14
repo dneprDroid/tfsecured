@@ -97,11 +97,6 @@ with tf.Session() as sess:
         # Display logs per epoch step
         if epoch % display_step == 0:
             print("Epoch:", '%04d' % (epoch+1), "cost={:.9f}".format(avg_cost))
-            # Export model
-#            minimal_graph = convert_variables_to_constants(sess, sess.graph_def, ['nn_output'])
-#            tf.train.write_graph(minimal_graph,
-#                                 'models',
-#                                 'saved_model-%s-epoch.pb' % epoch, as_text=False)
 
     print("Optimization Finished!")
 

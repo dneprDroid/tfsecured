@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		2236F7B020CAA76D006B02DB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7AF20CAA76D006B02DB /* aes.c */; };
 		2236F7B320CAA8F4006B02DB /* AESEncryptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */; };
+		22BAF34020D262190014DCC9 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */; };
+		22BAF34220D269A10014DCC9 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF34120D269430014DCC9 /* saved_model.pb */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
-		22BDBC10209BA3D900B6E2A3 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BDBC0F209BA3C500B6E2A3 /* saved_model.pb */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
 		22C03CEA209A5F330018285A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE9209A5F330018285A /* ViewController.swift */; };
@@ -31,9 +32,10 @@
 		2236F7AF20CAA76D006B02DB /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
 		2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AESEncryptor.cpp; sourceTree = "<group>"; };
 		2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AESEncryptor.hpp; sourceTree = "<group>"; };
+		22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "saved_model-encrypted.pb"; path = "python/models/saved_model-encrypted.pb"; sourceTree = SOURCE_ROOT; };
+		22BAF34120D269430014DCC9 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
-		22BDBC0F209BA3C500B6E2A3 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
 		22BDBC11209BA4CB00B6E2A3 /* UtilHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilHeaders.h; sourceTree = "<group>"; };
 		22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		22C03CE4209A5F330018285A /* TFSecured.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFSecured.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,7 +96,8 @@
 		22BDBC0E209BA3B500B6E2A3 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				22BDBC0F209BA3C500B6E2A3 /* saved_model.pb */,
+				22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */,
+				22BAF34120D269430014DCC9 /* saved_model.pb */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -257,7 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22BDBC10209BA3D900B6E2A3 /* saved_model.pb in Resources */,
+				22BAF34220D269A10014DCC9 /* saved_model.pb in Resources */,
+				22BAF34020D262190014DCC9 /* saved_model-encrypted.pb in Resources */,
 				22C03CF2209A5F330018285A /* LaunchScreen.storyboard in Resources */,
 				22C03CEF209A5F330018285A /* Assets.xcassets in Resources */,
 				22C03CED209A5F330018285A /* Main.storyboard in Resources */,

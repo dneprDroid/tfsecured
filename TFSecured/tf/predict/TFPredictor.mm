@@ -46,6 +46,8 @@ using namespace tensorflow;
 
 - (void)loadModel:(nullable TFErrorCallback) callback {
     const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
+    std::cout << "Loading pb model from path: " << path << std::endl;
+    
     auto status = ReadBinaryProto(tensorflow::Env::Default(), path, &graph);
     if (!status.ok()) {
         printf("Error reading graph: %s\n", status.error_message().c_str());
@@ -55,7 +57,7 @@ using namespace tensorflow;
                             localized: NSStringFromCString(status.error_message().c_str())]);
         return;
     }
-#if DEBUG
+
     for (NodeDef& node : *graph.mutable_node()) {
         if (node.op() != "Const") continue;
         auto attr = node.mutable_attr();
@@ -67,14 +69,13 @@ using namespace tensorflow;
         //        mutable_tensor->set_tensor_content(/* THIS */);
         std::cout   << "Node: " << node.name()
                     << ",\n     op: " << node.op()
-                    << "\n content: " << content << "\n";
+                    << "\n content size: " << content.size() << "\n";
     }
     // Save Model:
     //    std::fstream file;
     //    file.open("filename");
     //    bool success = graph.SerializeToOstream(&file);
     //    file.close();
-#endif
 }
 
 - (void)predictTensor:(const Tensor&)input output: (Tensor*)output {

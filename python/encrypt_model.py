@@ -53,7 +53,7 @@ def load_graph(path):
         f.close()
     with tf.Graph().as_default() as graph:
         tf.import_graph_def(graph_def, name=None)
-        return graph
+        return graph_def
 
 def generate_output_path(input_path, suffix):
     filename, file_extension = os.path.splitext(input_path)
@@ -89,18 +89,16 @@ KEY             = read_arg(3, default=random_string())
 
 
 
-graph = load_graph(INPUT_PATH)
-sess = tf.Session(graph=graph)
+graph_def = load_graph(INPUT_PATH)
 
 cipher = AESCipher(KEY)
-graph_def = graph.as_graph_def()
 
 for node in graph_def.node:
     if node.op != 'Const':
         continue
     print('Encrypting tensor content of "%s" with %s...' % (node.name, node.attr['dtype']))
     tensor_content = node.attr['value'].tensor.tensor_content
-    node.attr['value'].tensor.tensor_content = cipher.encrypt(tensor_content)
+#    node.attr['value'].tensor.tensor_content = cipher.encrypt(tensor_content)
 
 nodes_binary_str = graph_def.SerializeToString()
 
