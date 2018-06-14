@@ -1,8 +1,19 @@
 import base64
 import hashlib
-from Crypto import Random
-from Crypto.Cipher import AES
-import tensorflow as tf
+import os
+import sys
+import string
+import random
+
+try:
+    from Crypto import Random
+    from Crypto.Cipher import AES
+except:
+    raise Exception('Install Crypto!')
+try:
+    import tensorflow as tf
+except:
+    raise Exception('Install Tensorflow!')
 
 
 class AESCipher(object):
@@ -11,11 +22,11 @@ class AESCipher(object):
         self.bs = 32
         self.key = hashlib.sha256(key.encode()).digest()
 
-def encrypt(self, raw):
-    raw = self._pad(raw)
-    iv = Random.new().read(AES.block_size)
-    cipher = AES.new(self.key, AES.MODE_CBC, iv)
-    return base64.b64encode(iv + cipher.encrypt(raw))
+    def encrypt(self, raw):
+        raw = self._pad(raw)
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(self.key, AES.MODE_CBC, iv)
+        return base64.b64encode(iv + cipher.encrypt(raw))
     
     def decrypt(self, enc):
         enc = base64.b64decode(enc)
@@ -30,48 +41,70 @@ def encrypt(self, raw):
     def _unpad(s):
         return s[:-ord(s[len(s)-1:])]
 
+###############  Util Methods ###############
 
-path = '/Users/useruser/Desktop/TFSecured/python/models/saved_model.pb'
-encrypted_map = {}
-
-def encrypt_tensor(sess, graph_def, op):
-    tensor_type = op.op_def.name
-    tensor_id = op.name
-    if tensor_type == 'MatMul' :
-        var_index = 1 #TODO:
-        input_var = op.inputs[var_index]
-        input_var_data = input_var.eval(session=sess)
-        
-        print('1) input_var_data(%s): %s' % (input_var.name, input_var_data))
-        input_var_data_flatten = input_var_data.flatten()
-        for i in range(len(input_var_data_flatten)):
-            input_var_data_flatten[i] = 66 #TODO:
-        input_var_data = input_var_data_flatten.reshape(input_var_data.shape)
-        print('2) input_var_data: %s' % input_var_data)
-            
-        new_tensor = tf.Variable(input_var_data)
-        print('Updated: %s' % op.inputs[var_index].eval(session=sess))
-
-
-def load_graph(path, prefix):
+def load_graph(path):
     with tf.gfile.GFile(path, 'rb') as f:
+        if not tf.gfile.Exists(path):
+            raise Exception('File doesn\'t exist at path: %s' % path)
+        
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
+        f.close()
     with tf.Graph().as_default() as graph:
         tf.import_graph_def(graph_def, name=None)
         return graph
 
-graph_def = load_graph(path, 'prefix')
-sess = tf.Session(graph=graph_def)
-for op in graph_def.get_operations():
-    tensor_type = op.op_def.name
-    tensor_id = op.name
-    
-    print('tensor_type: %s' % tensor_type)
-    print('tensor_id: %s'   % tensor_id)
-    encrypt_tensor(sess, graph_def, op)
-    print('-----------------\n')
+def generate_output_path(input_path, suffix):
+    filename, file_extension = os.path.splitext(input_path)
+    return filename + suffix + file_extension
 
-#print('encrypted_map: %s' % encrypted_map)
-#tf.import_graph_def(tf.GraphDef(), name='', input_map=encrypted_map)
+def random_string(size=30, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(size))
 
+def read_arg(index, default=None, err_msg=None):
+    def print_error():
+        if err_msg is not None:
+            raise Exception(err_msg)
+        else:
+            raise Exception('Not found arg with index %s' % index)
+    if len(sys.argv) <= index:
+        if default is not None:
+            return default
+        print_error()
+    return sys.argv[index]
+
+#############################################
+
+USAGE = 'python encrypt_model.py <INPUT_PB_MODEL> <OUTPUT_PB_MODEL> <KEY>'
+print('\nUSAGE: %s\n' % USAGE)
+
+# Args:
+
+INPUT_PATH      = read_arg(1, default='/Users/useruser/Desktop/TFSecured/python/models/saved_model.pb')
+default_out     = generate_output_path(INPUT_PATH, '-encrypted')
+OUTPUT_PATH     = read_arg(2, default=default_out)
+KEY             = read_arg(3, default=random_string())
+
+
+
+
+graph = load_graph(INPUT_PATH)
+sess = tf.Session(graph=graph)
+
+cipher = AESCipher(KEY)
+graph_def = graph.as_graph_def()
+
+for node in graph_def.node:
+    if node.op != 'Const':
+        continue
+    print('Encrypting tensor content of "%s" with %s...' % (node.name, node.attr['dtype']))
+    tensor_content = node.attr['value'].tensor.tensor_content
+    node.attr['value'].tensor.tensor_content = cipher.encrypt(tensor_content)
+
+nodes_binary_str = graph_def.SerializeToString()
+
+with tf.gfile.GFile(OUTPUT_PATH, 'wb') as f:
+    f.write(nodes_binary_str);
+    f.close()
+print('Saved with key="%s" to %s' % (KEY, OUTPUT_PATH))

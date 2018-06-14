@@ -15,6 +15,8 @@
 #include <tensorflow/core/public/session.h>
 
 #include <tensorflow/core/framework/shape_inference.h>
+#include <iostream>
+#include <fstream>
 
 using namespace tensorflow;
 
@@ -53,6 +55,26 @@ using namespace tensorflow;
                             localized: NSStringFromCString(status.error_message().c_str())]);
         return;
     }
+#if DEBUG
+    for (NodeDef& node : *graph.mutable_node()) {
+        if (node.op() != "Const") continue;
+        auto attr = node.mutable_attr();
+        if (attr->count("value") == 0) continue;
+        
+        auto mutable_tensor = attr->at("value").mutable_tensor();
+        const auto &content = mutable_tensor->tensor_content();
+        //TODO: Decryption:
+        //        mutable_tensor->set_tensor_content(/* THIS */);
+        std::cout   << "Node: " << node.name()
+                    << ",\n     op: " << node.op()
+                    << "\n content: " << content << "\n";
+    }
+    // Save Model:
+    //    std::fstream file;
+    //    file.open("filename");
+    //    bool success = graph.SerializeToOstream(&file);
+    //    file.close();
+#endif
 }
 
 - (void)predictTensor:(const Tensor&)input output: (Tensor*)output {
@@ -63,17 +85,6 @@ using namespace tensorflow;
         printf("Error creating session: %s\n", status.error_message().c_str());
         return;
     }
-    
-//#if DEBUG
-//    for (const NodeDef& node : graph.node()) {
-//        auto size = node.attr();
-//        std::cout << "Node: " << node.name()
-//                  << ",\n     op: " << node.op()
-//                  << " size: " << size.begin()->first << ","
-//        << size.begin()->second.DebugString() << "\n";
-//    }
-//#endif
-    
     
     status = session->Create(graph);
     if (!status.ok()) {
