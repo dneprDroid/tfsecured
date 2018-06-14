@@ -31,6 +31,21 @@ namespace tf_secured {
     inline void GraphDefDecrypt(GraphDef &graph,  const std::string &key256);
 
     
+    inline const std::vector<uint8_t> decrypt(struct AES_ctx *ctx,
+                                              const std::string& tensor_content,
+                                              const uint32_t content_size) {
+        std::vector<uint8_t> tensor_bytes(tensor_content.begin() + AES_INIT_VECTOR_SIZE,
+                                          tensor_content.end());
+        
+        AES_CBC_decrypt_buffer(ctx, tensor_bytes.data(), content_size-AES_INIT_VECTOR_SIZE);
+        
+        const size_t tensor_size = tensor_bytes.size();
+        const int last_index = (int)tensor_bytes[tensor_size - 1];
+        size_t size_without_padding = tensor_size - last_index;
+        tensor_bytes.resize(size_without_padding);
+        return tensor_bytes;
+    }
+    
     
     inline void GraphDefDecrypt(GraphDef &graph,
                                 const std::string &key256) {
@@ -43,7 +58,7 @@ namespace tf_secured {
     inline void GraphDefDecrypt(GraphDef &graph,
                                 const std::array<uint8_t, 32> &keyByteArray) {
         
-        AES_ctx _aesCtx;
+        AES_ctx aesCtx;
 
         for (NodeDef& node : *graph.mutable_node()) {
             
@@ -59,17 +74,10 @@ namespace tf_secured {
             std::vector<uint8_t> iv_bytes(tensor_content.begin(),
                                           tensor_content.begin() + AES_INIT_VECTOR_SIZE);
 
-            AES_init_ctx_iv(&_aesCtx, keyByteArray.data(), iv_bytes.data());
+            AES_init_ctx_iv(&aesCtx, keyByteArray.data(), iv_bytes.data());
             
-            std::vector<uint8_t> tensor_bytes(tensor_content.begin() + AES_INIT_VECTOR_SIZE,
-                                              tensor_content.end());
-            
-            AES_CBC_decrypt_buffer(&_aesCtx, tensor_bytes.data(), content_size-AES_INIT_VECTOR_SIZE);
-            
-            const size_t tensor_size = tensor_bytes.size();
-            const int last_index = (int)tensor_bytes[tensor_size - 1];
-            size_t size_without_padding = tensor_size - last_index;
-            mutable_tensor->set_tensor_content(tensor_bytes.data(), size_without_padding);
+            const std::vector<uint8_t> tensor_bytes = decrypt(&aesCtx, tensor_content, content_size);
+            mutable_tensor->set_tensor_content(tensor_bytes.data(), tensor_bytes.size());
             
 #ifdef DEBUG
             std::cout   << "Node: " << node.name()
