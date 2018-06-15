@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:TFSecured.xcodeproj">
+      location = "group:/Users/useruser/Desktop/TFSecured/iosDemo/TFSecured-iOS.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

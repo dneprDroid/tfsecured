@@ -17,8 +17,9 @@
 #include <tensorflow/core/framework/shape_inference.h>
 #include <iostream>
 #include <fstream>
-#include "../encryption/GraphDefDecryptor.hpp"
-#include "../encryption/OpDecryptor.hpp"
+
+#include "../../../../TFSecured/GraphDefDecryptor.hpp"
+
 
 using namespace tensorflow;
 

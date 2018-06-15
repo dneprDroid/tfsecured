@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2236F7B020CAA76D006B02DB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7AF20CAA76D006B02DB /* aes.c */; };
-		22BAF34020D262190014DCC9 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */; };
-		22BAF34220D269A10014DCC9 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF34120D269430014DCC9 /* saved_model.pb */; };
+		226498C920D3E29200A07860 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 226498C420D3E29200A07860 /* aes.c */; };
+		226498CD20D3E2C000A07860 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */; };
+		226498CE20D3E2C000A07860 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 226498CC20D3E2C000A07860 /* saved_model.pb */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
@@ -26,18 +26,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2236F7AD20CAA76D006B02DB /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
-		2236F7AE20CAA76D006B02DB /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
-		2236F7AF20CAA76D006B02DB /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
-		2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
-		22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "saved_model-encrypted.pb"; path = "python/models/saved_model-encrypted.pb"; sourceTree = SOURCE_ROOT; };
-		22BAF34120D269430014DCC9 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
-		22BAF34320D2707B0014DCC9 /* picosha2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
+		226498C420D3E29200A07860 /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
+		226498C520D3E29200A07860 /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
+		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
+		226498C720D3E29200A07860 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		226498C820D3E29200A07860 /* picosha2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
+		226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
+		226498CC20D3E2C000A07860 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = saved_model.pb; sourceTree = "<group>"; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
 		22BDBC11209BA4CB00B6E2A3 /* UtilHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilHeaders.h; sourceTree = "<group>"; };
 		22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
-		22C03CE4209A5F330018285A /* TFSecured.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFSecured.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22C03CE4209A5F330018285A /* TFSecured-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TFSecured-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22C03CE7209A5F330018285A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22C03CE9209A5F330018285A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		22C03CEC209A5F330018285A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -80,31 +80,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2236F7AC20CAA767006B02DB /* encryption */ = {
+		226498C320D3E29200A07860 /* TFSecured */ = {
 			isa = PBXGroup;
 			children = (
-				22BAF34320D2707B0014DCC9 /* picosha2.hpp */,
-				2236F7AF20CAA76D006B02DB /* aes.c */,
-				2236F7AD20CAA76D006B02DB /* aes.h */,
-				2236F7AE20CAA76D006B02DB /* aes.hpp */,
-				2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */,
+				226498C420D3E29200A07860 /* aes.c */,
+				226498C520D3E29200A07860 /* aes.hpp */,
+				226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */,
+				226498C720D3E29200A07860 /* aes.h */,
+				226498C820D3E29200A07860 /* picosha2.hpp */,
 			);
-			path = encryption;
+			name = TFSecured;
+			path = ../../TFSecured;
 			sourceTree = "<group>";
 		};
-		22BDBC0E209BA3B500B6E2A3 /* data */ = {
+		226498CA20D3E2C000A07860 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */,
-				22BAF34120D269430014DCC9 /* saved_model.pb */,
+				226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */,
+				226498CC20D3E2C000A07860 /* saved_model.pb */,
 			);
-			path = data;
+			name = models;
+			path = ../../python/models;
 			sourceTree = "<group>";
 		};
 		22C03CDB209A5F330018285A = {
 			isa = PBXGroup;
 			children = (
-				22C03CE6209A5F330018285A /* TFSecured */,
+				22C03CE6209A5F330018285A /* TFSecured-iOS */,
 				22C03CE5209A5F330018285A /* Products */,
 				478F7B25769C93989778DB35 /* Pods */,
 				0C2593144EBFBD36F75A1870 /* Frameworks */,
@@ -114,15 +116,16 @@
 		22C03CE5209A5F330018285A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				22C03CE4209A5F330018285A /* TFSecured.app */,
+				22C03CE4209A5F330018285A /* TFSecured-iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		22C03CE6209A5F330018285A /* TFSecured */ = {
+		22C03CE6209A5F330018285A /* TFSecured-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				22BDBC0E209BA3B500B6E2A3 /* data */,
+				226498CA20D3E2C000A07860 /* models */,
+				226498C320D3E29200A07860 /* TFSecured */,
 				22D78200209B107C00666838 /* categories */,
 				22C03CF9209A5F3E0018285A /* tf */,
 				22C03CE7209A5F330018285A /* AppDelegate.swift */,
@@ -133,13 +136,12 @@
 				22C03CF0209A5F330018285A /* LaunchScreen.storyboard */,
 				22C03CF3209A5F330018285A /* Info.plist */,
 			);
-			path = TFSecured;
+			path = "TFSecured-iOS";
 			sourceTree = "<group>";
 		};
 		22C03CF9209A5F3E0018285A /* tf */ = {
 			isa = PBXGroup;
 			children = (
-				2236F7AC20CAA767006B02DB /* encryption */,
 				22D781FC209B0B8E00666838 /* predict */,
 				22D781F8209B0ACD00666838 /* utils */,
 				22C03CFA209A5F470018285A /* ops */,
@@ -201,9 +203,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		22C03CE3209A5F330018285A /* TFSecured */ = {
+		22C03CE3209A5F330018285A /* TFSecured-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 22C03CF6209A5F330018285A /* Build configuration list for PBXNativeTarget "TFSecured" */;
+			buildConfigurationList = 22C03CF6209A5F330018285A /* Build configuration list for PBXNativeTarget "TFSecured-iOS" */;
 			buildPhases = (
 				03A2011FB45AE04EA3AB16F2 /* [CP] Check Pods Manifest.lock */,
 				22C03CE0209A5F330018285A /* Sources */,
@@ -214,9 +216,9 @@
 			);
 			dependencies = (
 			);
-			name = TFSecured;
+			name = "TFSecured-iOS";
 			productName = TFSecured;
-			productReference = 22C03CE4209A5F330018285A /* TFSecured.app */;
+			productReference = 22C03CE4209A5F330018285A /* TFSecured-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -236,7 +238,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 22C03CDF209A5F330018285A /* Build configuration list for PBXProject "TFSecured" */;
+			buildConfigurationList = 22C03CDF209A5F330018285A /* Build configuration list for PBXProject "TFSecured-iOS" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -249,7 +251,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				22C03CE3209A5F330018285A /* TFSecured */,
+				22C03CE3209A5F330018285A /* TFSecured-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -259,10 +261,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22BAF34220D269A10014DCC9 /* saved_model.pb in Resources */,
-				22BAF34020D262190014DCC9 /* saved_model-encrypted.pb in Resources */,
 				22C03CF2209A5F330018285A /* LaunchScreen.storyboard in Resources */,
 				22C03CEF209A5F330018285A /* Assets.xcassets in Resources */,
+				226498CE20D3E2C000A07860 /* saved_model.pb in Resources */,
+				226498CD20D3E2C000A07860 /* saved_model-encrypted.pb in Resources */,
 				22C03CED209A5F330018285A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,7 +300,7 @@
 				22D781F7209AFFF700666838 /* SecMatmulOp.cpp in Sources */,
 				22D78203209B10B100666838 /* NSError+Util.m in Sources */,
 				22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */,
-				2236F7B020CAA76D006B02DB /* aes.c in Sources */,
+				226498C920D3E29200A07860 /* aes.c in Sources */,
 				22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */,
 				22C03CEA209A5F330018285A /* ViewController.swift in Sources */,
 				22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */,
@@ -442,15 +444,21 @@
 			baseConfigurationReference = 48A75F77DD4A5544AF315D97 /* Pods-TFSecured.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38YYV4LCDS;
-				INFOPLIST_FILE = TFSecured/Info.plist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers'",
+					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers/third_party/eigen3'",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/TFSecured-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TFSecured.TFSecured;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TFSecured/TFSecured-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TFSecured-iOS/TFSecured-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -462,15 +470,21 @@
 			baseConfigurationReference = 5628F34D21DC86209291C9C4 /* Pods-TFSecured.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38YYV4LCDS;
-				INFOPLIST_FILE = TFSecured/Info.plist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers'",
+					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers/third_party/eigen3'",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/TFSecured-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TFSecured.TFSecured;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TFSecured/TFSecured-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TFSecured-iOS/TFSecured-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -479,7 +493,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		22C03CDF209A5F330018285A /* Build configuration list for PBXProject "TFSecured" */ = {
+		22C03CDF209A5F330018285A /* Build configuration list for PBXProject "TFSecured-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22C03CF4209A5F330018285A /* Debug */,
@@ -488,7 +502,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		22C03CF6209A5F330018285A /* Build configuration list for PBXNativeTarget "TFSecured" */ = {
+		22C03CF6209A5F330018285A /* Build configuration list for PBXNativeTarget "TFSecured-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22C03CF7209A5F330018285A /* Debug */,
