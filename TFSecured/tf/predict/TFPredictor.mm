@@ -50,7 +50,7 @@ using namespace tensorflow;
     const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
     std::cout << "Loading pb model from path: " << path << std::endl;
     
-    auto status = ReadBinaryProto(tensorflow::Env::Default(), path, &graph);
+    auto status = tf_secured::GraphDefDecrypt(tensorflow::Env::Default(), path, &graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
     if (!status.ok()) {
         printf("Error reading graph: %s\n", status.error_message().c_str());
         if (callback)
@@ -59,8 +59,6 @@ using namespace tensorflow;
                             localized: NSStringFromCString(status.error_message().c_str())]);
         return;
     }
-    tf_secured::GraphDefDecrypt(graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
-    tf_secured::DecryptOpsNames(graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
 }
 
 - (void)predictTensor:(const Tensor&)input output: (Tensor*)output {

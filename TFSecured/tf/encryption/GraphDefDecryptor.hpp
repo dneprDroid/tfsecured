@@ -25,26 +25,21 @@ namespace tf_secured {
     
     const int32_t AES_BLOCK_SIZE       = AES_BLOCKLEN;
     const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;
-
     
-    inline void GraphDefDecrypt(GraphDef &graph,  const std::array<uint8_t, 32> &keyByteArray);
-    inline void GraphDefDecrypt(GraphDef &graph,  const std::string &key256);
-
-    
-    inline const std::vector<uint8_t> decrypt(struct AES_ctx *ctx,
-                                              const std::array<uint8_t, 32> &keyByteArray,
-                                              const std::string& tensor_content,
+    template<typename Content>
+    inline const std::vector<uint8_t> decrypt(const std::array<uint8_t, 32> &keyByteArray,
+                                              const Content& input_content,
                                               const uint32_t content_size) {
+        struct AES_ctx ctx;
+        const std::vector<uint8_t> iv_bytes(input_content.begin(),
+                                            input_content.begin() + AES_INIT_VECTOR_SIZE);
         
-        const std::vector<uint8_t> iv_bytes(tensor_content.begin(),
-                                            tensor_content.begin() + AES_INIT_VECTOR_SIZE);
+        AES_init_ctx_iv(&ctx, keyByteArray.data(), iv_bytes.data());
         
-        AES_init_ctx_iv(ctx, keyByteArray.data(), iv_bytes.data());
+        std::vector<uint8_t> tensor_bytes(input_content.begin() + AES_INIT_VECTOR_SIZE,
+                                          input_content.end());
         
-        std::vector<uint8_t> tensor_bytes(tensor_content.begin() + AES_INIT_VECTOR_SIZE,
-                                          tensor_content.end());
-        
-        AES_CBC_decrypt_buffer(ctx, tensor_bytes.data(), content_size-AES_INIT_VECTOR_SIZE);
+        AES_CBC_decrypt_buffer(&ctx, tensor_bytes.data(), content_size-AES_INIT_VECTOR_SIZE);
         
         const size_t tensor_size = tensor_bytes.size();
         const int last_index = (int)tensor_bytes[tensor_size - 1];
@@ -53,44 +48,35 @@ namespace tf_secured {
         return tensor_bytes;
     }
     
+    inline Status GraphDefDecrypt(tensorflow::Env *env,
+                                  const std::string &modelPath,
+                                  GraphDef *graph,
+                                  const std::array<uint8_t, 32> &keyByteArray) {
+        
+        std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
+        std::vector<char> bytes;
+        if (!file.eof() && !file.fail())
+        {
+            file.seekg(0, std::ios_base::end);
+            std::streampos fileSize = file.tellg();
+            bytes.resize(fileSize);
+            
+            file.seekg(0, std::ios_base::beg);
+            file.read(&bytes[0], fileSize);
+        }
+        std::cout << "Size (file size = " << file.tellg() << "): " << bytes.size() << std::endl;
+        std::vector<uint8_t> decrypted = decrypt(keyByteArray, bytes, (uint32_t)file.tellg());
+        graph->ParseFromArray(decrypted.data(), (int)decrypted.size());
+        return Status::OK();
+    }
     
-    inline void GraphDefDecrypt(GraphDef &graph,
-                                const std::string &key256) {
+    inline Status GraphDefDecrypt(tensorflow::Env *env,
+                                  const std::string &modelPath,
+                                  GraphDef *graph,
+                                  const std::string &key256) {
         std::array<uint8_t, 32> hashKey;
         
         picosha2::hash256_bytes(key256, hashKey);
-        GraphDefDecrypt(graph, hashKey);
-    }
-    
-    inline void GraphDefDecrypt(GraphDef &graph,
-                                const std::array<uint8_t, 32> &keyByteArray) {
-        
-        AES_ctx aesCtx;
-
-        for (NodeDef& node : *graph.mutable_node()) {
-#ifdef DEBUG
-            std::cout   << "Node: " << node.name()
-                        << ",\n     op: " << node.op() << std::endl;
-#endif
-
-            if (node.op() != "Const") continue;
-            auto attr = node.mutable_attr();
-            if (attr->count("value") == 0) continue;
-            
-            auto mutable_tensor = attr->at("value").mutable_tensor();
-            const std::string &tensor_content = mutable_tensor->tensor_content();
-            const uint32_t content_size = (uint32_t)mutable_tensor->ByteSizeLong();
-            
-            const std::vector<uint8_t> decrypted_tensor = decrypt(&aesCtx,
-                                                                  keyByteArray,
-                                                                  tensor_content,
-                                                                  content_size);
-            mutable_tensor->set_tensor_content(decrypted_tensor.data(), decrypted_tensor.size());
-        }
-        // Save Model:
-        //    std::fstream file;
-        //    file.open("filename");
-        //    bool success = graph.SerializeToOstream(&file);
-        //    file.close();
+        return GraphDefDecrypt(env, modelPath, graph, hashKey);
     }
 }

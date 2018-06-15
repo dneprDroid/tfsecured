@@ -98,23 +98,8 @@ graph_def = load_graph(INPUT_PATH)
 
 cipher = AESCipher(KEY)
 
-for node in graph_def.node:
-    if node.op != 'Const':
-        continue
-    print('Encrypting tensor content of "%s" with %s...' % (node.name, node.attr['dtype']))
-    tensor_content = node.attr['value'].tensor.tensor_content
-    old_tensor_size = len(tensor_content)
-    print('Tensor values: "%s"  (size=%s)' % (tensor_content[:10], old_tensor_size))
-    tensor_content = cipher.encrypt(tensor_content)
-    print('Tensor encrypted values: "%s"  (size=%s)' % (tensor_content[:10], len(tensor_content)))
-    print('Size diff: %s' % (len(tensor_content) - old_tensor_size))
-
-#    tensor_content = cipher.decrypt(tensor_content)
-#    print('Tensor decrypted values: "%s"' % (tensor_content[:10]))
-
-    node.attr['value'].tensor.tensor_content = tensor_content
-
 nodes_binary_str = graph_def.SerializeToString()
+nodes_binary_str = cipher.encrypt(nodes_binary_str)
 
 with tf.gfile.GFile(OUTPUT_PATH, 'wb') as f:
     f.write(nodes_binary_str);
