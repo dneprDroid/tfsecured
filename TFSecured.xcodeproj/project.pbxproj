@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2236F7B020CAA76D006B02DB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7AF20CAA76D006B02DB /* aes.c */; };
-		2236F7B320CAA8F4006B02DB /* AESEncryptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */; };
 		22BAF34020D262190014DCC9 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */; };
 		22BAF34220D269A10014DCC9 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 22BAF34120D269430014DCC9 /* saved_model.pb */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
@@ -30,8 +29,6 @@
 		2236F7AD20CAA76D006B02DB /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		2236F7AE20CAA76D006B02DB /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
 		2236F7AF20CAA76D006B02DB /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
-		2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AESEncryptor.cpp; sourceTree = "<group>"; };
-		2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AESEncryptor.hpp; sourceTree = "<group>"; };
 		2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
 		22BAF33F20D2620B0014DCC9 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "saved_model-encrypted.pb"; path = "python/models/saved_model-encrypted.pb"; sourceTree = SOURCE_ROOT; };
 		22BAF34120D269430014DCC9 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = python/models/saved_model.pb; sourceTree = SOURCE_ROOT; };
@@ -90,8 +87,6 @@
 				2236F7AF20CAA76D006B02DB /* aes.c */,
 				2236F7AD20CAA76D006B02DB /* aes.h */,
 				2236F7AE20CAA76D006B02DB /* aes.hpp */,
-				2236F7B220CAA8F4006B02DB /* AESEncryptor.hpp */,
-				2236F7B120CAA8F4006B02DB /* AESEncryptor.cpp */,
 				2257214B20D2AEBB007AAFF3 /* GraphDefDecryptor.hpp */,
 			);
 			path = encryption;
@@ -305,7 +300,6 @@
 				22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */,
 				2236F7B020CAA76D006B02DB /* aes.c in Sources */,
 				22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */,
-				2236F7B320CAA8F4006B02DB /* AESEncryptor.cpp in Sources */,
 				22C03CEA209A5F330018285A /* ViewController.swift in Sources */,
 				22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */,
 				22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */,

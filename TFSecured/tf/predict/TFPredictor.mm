@@ -23,7 +23,7 @@
 using namespace tensorflow;
 
 @interface TFPredictor () {
-    GraphDef graph;
+    GraphDef *graph;
     std::string inNode;
     std::string outNode;
 }
@@ -42,15 +42,19 @@ using namespace tensorflow;
     pred.modelPath = modelPath;
     pred->inNode  = std::string([inNode cStringUsingEncoding:NSUTF8StringEncoding]);
     pred->outNode = std::string([outNode cStringUsingEncoding:NSUTF8StringEncoding]);
+    pred->graph = new GraphDef;
     return pred;
 }
 
 
-- (void)loadModel:(nullable TFErrorCallback) callback {
+- (void)loadModelWithKey:(NSString*)key  error:(nullable TFErrorCallback) callback {
+    
+    std::string keyUnhashed([key cStringUsingEncoding:NSUTF8StringEncoding]);
+    
     const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
     std::cout << "Loading pb model from path: " << path << std::endl;
     
-    auto status = tf_secured::GraphDefDecrypt(tensorflow::Env::Default(), path, &graph, "JREH79XW7QKGX346LKU8MRM9SYM998");
+    auto status = tf_secured::GraphDefDecryptAES(tensorflow::Env::Default(), path, graph, keyUnhashed);
     if (!status.ok()) {
         printf("Error reading graph: %s\n", status.error_message().c_str());
         if (callback)
@@ -70,7 +74,7 @@ using namespace tensorflow;
         return;
     }
     
-    status = session->Create(graph);
+    status = session->Create(*graph);
     if (!status.ok()) {
         printf("Error adding graph to session: %s\n", status.error_message().c_str());
         return;
@@ -83,6 +87,7 @@ using namespace tensorflow;
                           {},
                           &outputs);
     if (!status.ok()) {
+        std::cout << "Session running is failed!" << "\n";
         return;
     }
     if (outputs.size() == 0) {
@@ -94,7 +99,8 @@ using namespace tensorflow;
 
 
 - (void)dealloc {
-    printf("...... dealloc ......\n");
+    printf("...... TFPredictor deallocation ......\n");
+    delete graph;
 }
 
 @end

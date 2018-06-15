@@ -31,14 +31,17 @@ class ViewController: UIViewController {
             let predictor = MNISTPredictor.initWith(modelPath,
                                                     inputNodeName: INPUT_NODE_NAME,
                                                     outputNodeName: OUTPUT_NODE_NAME)
-            predictor.loadModel(nil)
+            predictor.loadModel(key: "ZBNPWIIP6AEA3L1H93OSYO3Z40NJ0A",
+                                error: { _ in
+                print("Loading proto file is failed.")
+            })
             let inputImage =  image.resize(targetSize: CGSize(width: IMAGE_SIDE_SIZE,
                                                               height: IMAGE_SIDE_SIZE))
             predictor.predict(image: inputImage,
                               success: { digit in
                 print("Recognized Digit: \(digit)")
             }, error: {
-                print("Error")
+                print("Recognition is failed!")
             })
             
         }

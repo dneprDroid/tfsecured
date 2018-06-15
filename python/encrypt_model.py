@@ -89,7 +89,7 @@ print('\nUSAGE: %s\n' % USAGE)
 INPUT_PATH      = read_arg(1, default='/Users/useruser/Desktop/TFSecured/python/models/saved_model.pb')
 default_out     = generate_output_path(INPUT_PATH, '-encrypted')
 OUTPUT_PATH     = read_arg(2, default=default_out)
-KEY             = read_arg(3, default="JREH79XW7QKGX346LKU8MRM9SYM998")
+KEY             = read_arg(3, default=random_string())
 
 
 

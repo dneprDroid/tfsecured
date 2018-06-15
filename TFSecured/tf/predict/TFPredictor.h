@@ -29,7 +29,9 @@ typedef void(^TFErrorCallback)(NSError *error);
           outputNodeName:(NSString*)outNode;
 
 
-- (void)loadModel:(nullable TFErrorCallback) callback;
+- (void)loadModelWithKey:(NSString*)key  error:(nullable TFErrorCallback) callback
+
+  NS_SWIFT_NAME(loadModel(key:error:));
 
 #ifdef __cplusplus
 
