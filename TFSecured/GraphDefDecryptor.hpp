@@ -56,7 +56,7 @@ namespace tf_secured {
         } else {
             return errors::DataLoss("Can't read file at ", modelPath);
         }
-        
+
         decryptor(keyByteArray, bytes, (uint32_t)file.tellg());
         
         if (!graph->ParseFromArray(bytes.data(), (int)bytes.size())) {

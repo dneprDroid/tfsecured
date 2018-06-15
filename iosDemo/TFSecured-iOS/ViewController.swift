@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recognize(image: #imageLiteral(resourceName: "nine"))
+        recognize(image: #imageLiteral(resourceName: "digit"))
     }
     
     
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
                                 error: { _ in
                 print("Loading proto file is failed.")
             })
-            let inputImage =  image.resize(targetSize: CGSize(width: IMAGE_SIDE_SIZE,
+            let inputImage =  image.resize(targetSize: CGSize(width:  IMAGE_SIDE_SIZE,
                                                               height: IMAGE_SIDE_SIZE))
             predictor.predict(image: inputImage,
                               success: { digit in
