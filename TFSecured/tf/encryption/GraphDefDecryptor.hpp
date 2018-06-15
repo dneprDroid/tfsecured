@@ -26,26 +26,26 @@ namespace tf_secured {
     const int32_t AES_BLOCK_SIZE       = AES_BLOCKLEN;
     const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;
     
-    template<typename Content>
-    inline const std::vector<uint8_t> decrypt(const std::array<uint8_t, 32> &keyByteArray,
-                                              const Content& input_content,
-                                              const uint32_t content_size) {
+    template<typename In>
+    inline void decrypt(const std::array<uint8_t, 32> &keyByteArray,
+                        std::vector<In> &input_content,
+                        const uint32_t content_size) {
+        
         struct AES_ctx ctx;
         const std::vector<uint8_t> iv_bytes(input_content.begin(),
                                             input_content.begin() + AES_INIT_VECTOR_SIZE);
         
         AES_init_ctx_iv(&ctx, keyByteArray.data(), iv_bytes.data());
         
-        std::vector<uint8_t> tensor_bytes(input_content.begin() + AES_INIT_VECTOR_SIZE,
-                                          input_content.end());
+        input_content.erase(input_content.begin(),
+                            input_content.begin()+ AES_INIT_VECTOR_SIZE);
         
-        AES_CBC_decrypt_buffer(&ctx, tensor_bytes.data(), content_size-AES_INIT_VECTOR_SIZE);
+        AES_CBC_decrypt_buffer(&ctx, reinterpret_cast<uint8_t*>(input_content.data()), content_size-AES_INIT_VECTOR_SIZE);
         
-        const size_t tensor_size = tensor_bytes.size();
-        const int last_index = (int)tensor_bytes[tensor_size - 1];
-        size_t size_without_padding = tensor_size - last_index;
-        tensor_bytes.resize(size_without_padding);
-        return tensor_bytes;
+        const size_t size = input_content.size();
+        const int last_index = (int)input_content[size - 1];
+        size_t size_without_padding = size - last_index;
+        input_content.resize(size_without_padding);
     }
     
     inline Status GraphDefDecrypt(tensorflow::Env *env,
@@ -65,8 +65,10 @@ namespace tf_secured {
             file.read(&bytes[0], fileSize);
         }
         std::cout << "Size (file size = " << file.tellg() << "): " << bytes.size() << std::endl;
-        std::vector<uint8_t> decrypted = decrypt(keyByteArray, bytes, (uint32_t)file.tellg());
-        graph->ParseFromArray(decrypted.data(), (int)decrypted.size());
+        
+        decrypt(keyByteArray, bytes, (uint32_t)file.tellg());
+        
+        graph->ParseFromArray(bytes.data(), (int)bytes.size());
         return Status::OK();
     }
     
