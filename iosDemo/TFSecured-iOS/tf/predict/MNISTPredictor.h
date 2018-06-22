@@ -10,7 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 enum {
-    MNIST_IMAGE_NOT_RECOGNIZED = -1
+    MNIST_IMAGE_NOT_RECOGNIZED = -1,
+    MNIST_IMAGE_PIXEL_SIDE_SIZE = 28
 };
 
 typedef void(^MNISTSuccessCallback)(NSUInteger digit);

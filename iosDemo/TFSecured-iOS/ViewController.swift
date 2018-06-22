@@ -11,7 +11,6 @@ import UIKit
 
 private let INPUT_NODE_NAME     = "nn_input"
 private let OUTPUT_NODE_NAME    = "nn_output"
-private let IMAGE_SIDE_SIZE     = 28
 
 
 class ViewController: UIViewController {
@@ -35,8 +34,8 @@ class ViewController: UIViewController {
                                 error: { _ in
                 print("Loading proto file is failed.")
             })
-            let inputImage =  image.resize(targetSize: CGSize(width:  IMAGE_SIDE_SIZE,
-                                                              height: IMAGE_SIDE_SIZE))
+            let inputImage =  image.resize(targetSize: CGSize(width:  MNIST_IMAGE_PIXEL_SIDE_SIZE,
+                                                              height: MNIST_IMAGE_PIXEL_SIDE_SIZE))
             predictor.predict(image: inputImage,
                               success: { digit in
                 print("Recognized Digit: \(digit)")

@@ -67,7 +67,10 @@ using namespace tensorflow;
                error:(MNISTErrorCallback)error {
     const long width = image.size.width;
     const long height = image.size.height;
-
+    
+    NSAssert(width == height && width == MNIST_IMAGE_PIXEL_SIDE_SIZE,
+             @"Invalid image input size : %lu (must be %i)", width, MNIST_IMAGE_PIXEL_SIDE_SIZE);
+    
     std::vector<unsigned char> imageBytes(height * width * 4);
     getBytes(image, imageBytes);
     Tensor in;
