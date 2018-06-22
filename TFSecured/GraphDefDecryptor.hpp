@@ -20,7 +20,7 @@
 
 using namespace tensorflow;
 
-namespace tf_secured {
+namespace tfsecured {
 
     #define DEFAULT_KEY_SIZE 32
     
@@ -38,8 +38,7 @@ namespace tf_secured {
                               std::vector<char> &input_content,
                               const uint32_t content_size);
     
-    inline Status GraphDefDecrypt(tensorflow::Env *env,
-                                  const std::string &modelPath,
+    inline Status GraphDefDecrypt(const std::string &modelPath,
                                   GraphDef *graph,
                                   const std::array<uint8_t, DEFAULT_KEY_SIZE> &keyByteArray,
                                   const Decryptor decryptor) {
@@ -65,14 +64,13 @@ namespace tf_secured {
         return Status::OK();
     }
     
-    inline Status GraphDefDecryptAES(tensorflow::Env *env,
-                                     const std::string &modelPath,
+    inline Status GraphDefDecryptAES(const std::string &modelPath,
                                      GraphDef *graph,
                                      const std::string &key256) {
         std::array<uint8_t, DEFAULT_KEY_SIZE> hashKey;
         
         picosha2::hash256_bytes(key256, hashKey);
-        return GraphDefDecrypt(env, modelPath,
+        return GraphDefDecrypt(modelPath,
                                graph, hashKey,
                                internal::decryptAES);
     }

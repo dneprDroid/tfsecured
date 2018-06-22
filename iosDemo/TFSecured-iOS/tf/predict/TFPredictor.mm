@@ -55,7 +55,7 @@ using namespace tensorflow;
     const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
     std::cout << "Loading pb model from path: " << path << std::endl;
     
-    auto status = tf_secured::GraphDefDecryptAES(tensorflow::Env::Default(), path, graph, keyUnhashed);
+    auto status = tfsecured::GraphDefDecryptAES(path, graph, keyUnhashed);
     if (!status.ok()) {
         printf("Error reading graph: %s\n", status.error_message().c_str());
         if (callback)

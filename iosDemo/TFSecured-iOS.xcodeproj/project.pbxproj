@@ -22,10 +22,11 @@
 		22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D781FE209B0E1E00666838 /* TFPredictor.mm */; };
 		22D78203209B10B100666838 /* NSError+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D78202209B10B100666838 /* NSError+Util.m */; };
 		22D78206209B12ED00666838 /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D78205209B12ED00666838 /* Utils.mm */; };
-		586494A3E0B9B72AE45038DF /* Pods_TFSecured.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B1D38D8D8DA539A7E105DC /* Pods_TFSecured.framework */; };
+		AC0BA825D89502F758DAB934 /* Pods_TFSecured_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		226498C420D3E29200A07860 /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
 		226498C520D3E29200A07860 /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
 		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
@@ -57,7 +58,9 @@
 		22D78205209B12ED00666838 /* Utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
 		48A75F77DD4A5544AF315D97 /* Pods-TFSecured.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFSecured.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFSecured/Pods-TFSecured.debug.xcconfig"; sourceTree = "<group>"; };
 		5628F34D21DC86209291C9C4 /* Pods-TFSecured.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFSecured.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFSecured/Pods-TFSecured.release.xcconfig"; sourceTree = "<group>"; };
+		DEC89E110075DAC89519253F /* Pods-TFSecured-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFSecured-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFSecured-iOS/Pods-TFSecured-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F5B1D38D8D8DA539A7E105DC /* Pods_TFSecured.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F77211EB4B2EB3C4D7E3DD0E /* Pods-TFSecured-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFSecured-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFSecured-iOS/Pods-TFSecured-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				586494A3E0B9B72AE45038DF /* Pods_TFSecured.framework in Frameworks */,
+				AC0BA825D89502F758DAB934 /* Pods_TFSecured_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				F5B1D38D8D8DA539A7E105DC /* Pods_TFSecured.framework */,
+				064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,6 +200,8 @@
 			children = (
 				48A75F77DD4A5544AF315D97 /* Pods-TFSecured.debug.xcconfig */,
 				5628F34D21DC86209291C9C4 /* Pods-TFSecured.release.xcconfig */,
+				DEC89E110075DAC89519253F /* Pods-TFSecured-iOS.debug.xcconfig */,
+				F77211EB4B2EB3C4D7E3DD0E /* Pods-TFSecured-iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -283,7 +289,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TFSecured-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TFSecured-iOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -441,7 +447,7 @@
 		};
 		22C03CF7209A5F330018285A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48A75F77DD4A5544AF315D97 /* Pods-TFSecured.debug.xcconfig */;
+			baseConfigurationReference = DEC89E110075DAC89519253F /* Pods-TFSecured-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -467,7 +473,7 @@
 		};
 		22C03CF8209A5F330018285A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5628F34D21DC86209291C9C4 /* Pods-TFSecured.release.xcconfig */;
+			baseConfigurationReference = F77211EB4B2EB3C4D7E3DD0E /* Pods-TFSecured-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
