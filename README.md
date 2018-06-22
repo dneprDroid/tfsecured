@@ -4,7 +4,7 @@ Small library for AES encryption/decryption tensorflow proto models (*.pb).
 
 ## AES
 
-For 
+Key size is 256 bits.  
 
 ## Usage 
 
