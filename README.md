@@ -1,6 +1,6 @@
 ## TFSecured
 
-Small library for AES encryption/decryption tensorflow proto models (*.pb).
+Small library for tensorflow proto models (*.pb) encryption/decryption.
 
 ## AES
 
