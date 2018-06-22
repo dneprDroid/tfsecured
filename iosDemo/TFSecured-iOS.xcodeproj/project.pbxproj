@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		226498C920D3E29200A07860 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 226498C420D3E29200A07860 /* aes.c */; };
-		226498CD20D3E2C000A07860 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */; };
-		226498CE20D3E2C000A07860 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 226498CC20D3E2C000A07860 /* saved_model.pb */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
@@ -27,13 +25,13 @@
 
 /* Begin PBXFileReference section */
 		064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		225EB71E20DD1F57002017FC /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = saved_model.pb; path = ../demo/models/saved_model.pb; sourceTree = "<group>"; };
+		225EB71F20DD1F57002017FC /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "saved_model-encrypted.pb"; path = "../demo/models/saved_model-encrypted.pb"; sourceTree = "<group>"; };
 		226498C420D3E29200A07860 /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
 		226498C520D3E29200A07860 /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
 		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
 		226498C720D3E29200A07860 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		226498C820D3E29200A07860 /* picosha2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
-		226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
-		226498CC20D3E2C000A07860 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = saved_model.pb; sourceTree = "<group>"; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
 		22BDBC11209BA4CB00B6E2A3 /* UtilHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilHeaders.h; sourceTree = "<group>"; };
@@ -100,8 +98,8 @@
 		226498CA20D3E2C000A07860 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				226498CB20D3E2C000A07860 /* saved_model-encrypted.pb */,
-				226498CC20D3E2C000A07860 /* saved_model.pb */,
+				225EB71F20DD1F57002017FC /* saved_model-encrypted.pb */,
+				225EB71E20DD1F57002017FC /* saved_model.pb */,
 			);
 			name = models;
 			path = ../../python/models;
@@ -269,8 +267,6 @@
 			files = (
 				22C03CF2209A5F330018285A /* LaunchScreen.storyboard in Resources */,
 				22C03CEF209A5F330018285A /* Assets.xcassets in Resources */,
-				226498CE20D3E2C000A07860 /* saved_model.pb in Resources */,
-				226498CD20D3E2C000A07860 /* saved_model-encrypted.pb in Resources */,
 				22C03CED209A5F330018285A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
