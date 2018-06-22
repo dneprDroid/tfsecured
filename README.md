@@ -4,7 +4,7 @@ Small library for tensorflow proto models (*.pb) encryption/decryption.
 
 ## AES
 
-You may use random string with random length like a key, when library calculates sha256 hash of it and use as internal key with size 256 bits.
+You may use random string with random length like a key, then library calculates sha256 hash of it and use as internal key with size 256 bits.
 
 ## Usage 
 
