@@ -14,6 +14,11 @@ C++ Usage (see [TFPredictor.mm](https://github.com/dneprDroid/TFSecured/blob/mas
 
 ```cpp
 
+    #include <GraphDefDecryptor.hpp>
+
+    ........
+
+
     tensorflow::GraphDef graph;
     // Decryption: 
     auto status = tfsecured::GraphDefDecryptAES(path,         // path to *.pb file (frozen graph)
