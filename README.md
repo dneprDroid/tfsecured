@@ -4,7 +4,7 @@ Small library for tensorflow proto models (*.pb) encryption/decryption.
 
 ## AES
 
-Key size is 256 bits.  
+You may use random string with random length like a key, when library calculates sha256 hash of it and use as internal key with size 256 bits.
 
 ## Usage 
 
@@ -23,7 +23,7 @@ C++ Usage (see [TFPredictor.mm](https://github.com/dneprDroid/TFSecured/blob/mas
     // Decryption: 
     auto status = tfsecured::GraphDefDecryptAES(path,         // path to *.pb file (frozen graph)
                                                 &graph,
-                                                keyUnhashed); // AES base64 key
+                                                keyUnhashed); // your key
     if (!status.ok()) {
         std::cout << status.error_message() << std::endl;
         return;
