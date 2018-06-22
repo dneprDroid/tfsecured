@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		225EB72020DD202E002017FC /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 225EB71F20DD1F57002017FC /* saved_model-encrypted.pb */; };
+		225EB72120DD202E002017FC /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 225EB71E20DD1F57002017FC /* saved_model.pb */; };
 		226498C920D3E29200A07860 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 226498C420D3E29200A07860 /* aes.c */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
@@ -265,6 +267,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				225EB72020DD202E002017FC /* saved_model-encrypted.pb in Resources */,
+				225EB72120DD202E002017FC /* saved_model.pb in Resources */,
 				22C03CF2209A5F330018285A /* LaunchScreen.storyboard in Resources */,
 				22C03CEF209A5F330018285A /* Assets.xcassets in Resources */,
 				22C03CED209A5F330018285A /* Main.storyboard in Resources */,

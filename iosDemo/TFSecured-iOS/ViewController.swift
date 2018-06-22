@@ -30,7 +30,7 @@ class ViewController: UIViewController {
             let predictor = MNISTPredictor.initWith(modelPath,
                                                     inputNodeName: INPUT_NODE_NAME,
                                                     outputNodeName: OUTPUT_NODE_NAME)
-            predictor.loadModel(key: "ZBNPWIIP6AEA3L1H93OSYO3Z40NJ0A",
+            predictor.loadModel(key: "BXKE0351PD9TXZ7XA8CK8XZU8XBGDM",
                                 error: { _ in
                 print("Loading proto file is failed.")
             })

@@ -21,11 +21,9 @@ class AESCipher(object):
     def __init__(self, _key):
         self.bs = 32
         self.key = hashlib.sha256(_key.encode()).digest()
-        print('Hash Key: %s' %  self.key)
     
     def encrypt(self, raw):
         raw = self._pad(raw)
-        print('Raw (size=%s)' % (AES.block_size))
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
 #        return base64.b64encode(iv + cipher.encrypt(raw))
@@ -86,7 +84,7 @@ print('\nUSAGE: %s\n' % USAGE)
 
 # Args:
 
-INPUT_PATH      = read_arg(1, default='/Users/useruser/Desktop/TFSecured/python/models/saved_model.pb')
+INPUT_PATH      = read_arg(1, default='demo/models/saved_model.pb')
 default_out     = generate_output_path(INPUT_PATH, '-encrypted')
 OUTPUT_PATH     = read_arg(2, default=default_out)
 KEY             = read_arg(3, default=random_string())
