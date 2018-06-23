@@ -13,14 +13,17 @@ def testAES():
         raise Exception('Match error: "%s" != "%s"' % (text, decrypted))
 
 
+def main():
+    print('\n-----------------------------------')
+    print('Tests:')
 
-print('\n-----------------------------------')
-print('Tests:')
+    tests = [testAES]
 
-tests = [testAES]
+    for test in tests:
+        test()
+        print('Test "%s" is succeed\n' % (test.func_name))
 
-for test in tests:
-    test()
-    print('Test "%s" is succeed\n' % (test.func_name))
+    print('-----------------------------------\n')
 
-print('-----------------------------------\n')
+if __name__ == "__main__":
+    main()

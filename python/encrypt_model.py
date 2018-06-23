@@ -79,27 +79,35 @@ def read_arg(index, default=None, err_msg=None):
 
 #############################################
 
-USAGE = 'python encrypt_model.py <INPUT_PB_MODEL> <OUTPUT_PB_MODEL> <KEY>'
-print('\nUSAGE: %s\n' % USAGE)
+def main():
+    USAGE = 'python encrypt_model.py <INPUT_PB_MODEL> <OUTPUT_PB_MODEL> <KEY>'
+    print('\nUSAGE: %s\n' % USAGE)
 
-# Args:
+    # Args:
 
-INPUT_PATH      = read_arg(1, default='demo/models/saved_model.pb')
-default_out     = generate_output_path(INPUT_PATH, '-encrypted')
-OUTPUT_PATH     = read_arg(2, default=default_out)
-KEY             = read_arg(3, default=random_string())
-
-
+    INPUT_PATH      = read_arg(1, default='demo/models/saved_model.pb')
+    default_out     = generate_output_path(INPUT_PATH, '-encrypted')
+    OUTPUT_PATH     = read_arg(2, default=default_out)
+    KEY             = read_arg(3, default=random_string())
 
 
-graph_def = load_graph(INPUT_PATH)
 
-cipher = AESCipher(KEY)
 
-nodes_binary_str = graph_def.SerializeToString()
-nodes_binary_str = cipher.encrypt(nodes_binary_str)
+    graph_def = load_graph(INPUT_PATH)
 
-with tf.gfile.GFile(OUTPUT_PATH, 'wb') as f:
-    f.write(nodes_binary_str);
-    f.close()
-print('Saved with key="%s" to %s' % (KEY, OUTPUT_PATH))
+    cipher = AESCipher(KEY)
+
+    nodes_binary_str = graph_def.SerializeToString()
+
+
+
+    nodes_binary_str = cipher.encrypt(nodes_binary_str)
+
+    with tf.gfile.GFile(OUTPUT_PATH, 'wb') as f:
+        f.write(nodes_binary_str);
+        f.close()
+    print('Saved with key="%s" to %s' % (KEY, OUTPUT_PATH))
+
+
+if __name__ == "__main__":
+    main()
