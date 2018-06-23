@@ -92,7 +92,7 @@ using namespace tensorflow;
         return;
     }
     if (outputs.size() == 0) {
-        std::cout << "Outputs is empty!" << "\n";
+        std::cout << "Outputs are empty!" << "\n";
         return;
     }
     *output = outputs[0];
