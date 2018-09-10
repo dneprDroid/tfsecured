@@ -15,8 +15,8 @@
 #include <tensorflow/core/framework/shape_inference.h>
 #include <iostream>
 #include <fstream>
-#include "picosha2.hpp"
-#include "aes.hpp"
+#include "internal/picosha2.hpp"
+#include "internal/aes.hpp"
 
 using namespace tensorflow;
 
@@ -24,23 +24,25 @@ namespace tfsecured {
 
     #define DEFAULT_KEY_SIZE 32
     
+    typedef std::array<uint8_t, DEFAULT_KEY_SIZE> KeyBytes;
+
     static const int32_t AES_BLOCK_SIZE       = AES_BLOCKLEN;
     static const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;
     
     namespace internal  {
         template<typename In>
-        inline void decryptAES(const std::array<uint8_t, DEFAULT_KEY_SIZE> &keyByteArray,
-                               std::vector<In> &input_content,
-                               const uint32_t content_size);
+        inline Status decryptAES(const KeyBytes &key_bytes,
+                                 std::vector<In> &input_content,
+                                 const uint32_t content_size);
     }
     
-    typedef void (*Decryptor)(const std::array<uint8_t, DEFAULT_KEY_SIZE> &keyByteArray,
-                              std::vector<char> &input_content,
-                              const uint32_t content_size);
+    typedef Status (*Decryptor)(const KeyBytes &key_bytes,
+                                std::vector<char> &input_content,
+                                const uint32_t content_size);
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
                                   GraphDef *graph,
-                                  const std::array<uint8_t, DEFAULT_KEY_SIZE> &keyByteArray,
+                                  const KeyBytes &keyByteArray,
                                   const Decryptor decryptor) {
         
         std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
@@ -56,36 +58,49 @@ namespace tfsecured {
             return errors::DataLoss("Can't read file at ", modelPath);
         }
 
-        decryptor(keyByteArray, bytes, (uint32_t)file.tellg());
-        
+        auto status = decryptor(keyByteArray, bytes, (uint32_t)file.tellg());
+        if (!status.ok()) {
+            return status;
+        }
         if (!graph->ParseFromArray(bytes.data(), (int)bytes.size())) {
             return errors::DataLoss("Can't parse ", modelPath, " as binary proto");
         }
         return Status::OK();
     }
     
+    inline Status GraphDefDecrypt(const std::string &modelPath,
+                                  GraphDef *graph,
+                                  const KeyBytes &keyByteArray) {
+        return GraphDefDecrypt(modelPath,
+                               graph, keyByteArray,
+                               internal::decryptAES);
+    }
+    
     inline Status GraphDefDecryptAES(const std::string &modelPath,
                                      GraphDef *graph,
                                      const std::string &key256) {
-        std::array<uint8_t, DEFAULT_KEY_SIZE> hashKey;
+        KeyBytes hashKey;
         
         picosha2::hash256_bytes(key256, hashKey);
         return GraphDefDecrypt(modelPath,
                                graph, hashKey,
                                internal::decryptAES);
     }
-    
  
     template<typename In>
-    inline void internal::decryptAES(const std::array<uint8_t, 32> &keyByteArray,
-                                     std::vector<In> &input_content,
-                                     const uint32_t content_size) {
-        
+    inline Status internal::decryptAES(const KeyBytes &key_bytes,
+                                       std::vector<In> &input_content,
+                                       const uint32_t content_size) {
+        if (input_content.size() < AES_INIT_VECTOR_SIZE) {
+            return errors::InvalidArgument("Input encrypted content size = ",
+                                           input_content.size(),
+                                           " is too small for AES CBC decryption.");
+        }
         struct AES_ctx ctx;
         const std::vector<uint8_t> iv_bytes(input_content.begin(),
                                             input_content.begin() + AES_INIT_VECTOR_SIZE);
         
-        AES_init_ctx_iv(&ctx, keyByteArray.data(), iv_bytes.data());
+        AES_init_ctx_iv(&ctx, key_bytes.data(), iv_bytes.data());
         
         input_content.erase(input_content.begin(),
                             input_content.begin() + AES_INIT_VECTOR_SIZE);
@@ -94,7 +109,11 @@ namespace tfsecured {
         
         const size_t size = input_content.size();
         const int last_index = (int)input_content[size - 1];
+        if (last_index < 0 || last_index >= size) {
+            return errors::InvalidArgument("Decryption failed for this key.");
+        }
         size_t size_without_padding = size - last_index;
         input_content.resize(size_without_padding);
+        return Status::OK();
     }
 }

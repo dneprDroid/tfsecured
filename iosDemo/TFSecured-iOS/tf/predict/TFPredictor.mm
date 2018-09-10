@@ -70,14 +70,9 @@ using namespace tensorflow;
     SessionOptions options;
     Status status;
     std::unique_ptr<Session> session(NewSession(options));
-    if (!status.ok()) {
-        printf("Error creating session: %s\n", status.error_message().c_str());
-        return;
-    }
-    
     status = session->Create(*graph);
     if (!status.ok()) {
-        printf("Error adding graph to session: %s\n", status.error_message().c_str());
+        printf("Error creating session: %s\n", status.error_message().c_str());
         return;
     }
     std::cout << "Tensor input shape: " << input.shape().DebugString() << "\n";
