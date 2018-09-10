@@ -97,11 +97,8 @@
 		226498C320D3E29200A07860 /* TFSecured */ = {
 			isa = PBXGroup;
 			children = (
-				226498C420D3E29200A07860 /* aes.c */,
-				226498C520D3E29200A07860 /* aes.hpp */,
+				22CCE8AD2146BED40040282E /* internal */,
 				226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */,
-				226498C720D3E29200A07860 /* aes.h */,
-				226498C820D3E29200A07860 /* picosha2.hpp */,
 			);
 			name = TFSecured;
 			path = ../../TFSecured;
@@ -160,6 +157,17 @@
 				22D781F5209AFFF700666838 /* SecMatmulOp.cpp */,
 			);
 			path = ops;
+			sourceTree = "<group>";
+		};
+		22CCE8AD2146BED40040282E /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				226498C720D3E29200A07860 /* aes.h */,
+				226498C820D3E29200A07860 /* picosha2.hpp */,
+				226498C420D3E29200A07860 /* aes.c */,
+				226498C520D3E29200A07860 /* aes.hpp */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 		22D781F8209B0ACD00666838 /* utils */ = {

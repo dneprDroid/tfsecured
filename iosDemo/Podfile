@@ -5,5 +5,5 @@ use_frameworks!
 
 target 'TFSecured-iOS' do
 
-    pod 'TensorFlow-experimental'
+    pod 'TensorFlow-experimental', '~> 1.1.1'
 end
