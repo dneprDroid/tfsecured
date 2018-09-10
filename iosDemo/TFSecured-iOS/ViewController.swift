@@ -31,8 +31,8 @@ class ViewController: UIViewController {
                                                     inputNodeName: INPUT_NODE_NAME,
                                                     outputNodeName: OUTPUT_NODE_NAME)
             predictor.loadModel(key: "BXKE0351PD9TXZ7XA8CK8XZU8XBGDM",
-                                error: { _ in
-                print("Loading proto file is failed.")
+                                error: { error in
+                print("Loading proto file is failed.\n\(error.localizedDescription)")
             })
             let inputImage =  image.resize(targetSize: CGSize(width:  MNIST_IMAGE_PIXEL_SIDE_SIZE,
                                                               height: MNIST_IMAGE_PIXEL_SIDE_SIZE))
