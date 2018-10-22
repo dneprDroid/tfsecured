@@ -10,6 +10,10 @@ import UIKit.UIImage
 
 extension UIImage {
     
+    func resize(targetSize newSize: CGFloat) -> UIImage {
+        return self.resize(targetSize: CGSize(width: newSize, height: newSize))
+    }
+    
     func resize(targetSize newSize: CGSize) -> UIImage {
         let image = self
 //        let size = image.size
