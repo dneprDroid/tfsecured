@@ -19,8 +19,7 @@
 #include <openssl/evp.h>
 #include <openssl/aes.h>
 #include <openssl/err.h>
-
-#include "internal/picosha2.hpp"
+#include <openssl/sha.h>
 
 using namespace tensorflow;
 
@@ -31,10 +30,11 @@ namespace tfsecured {
                                                 EVP_CIPHER_CTX_free(ctx);           \
                                                 return errors::DataLoss(msg);       \
                                                }
-    #define DEFAULT_KEY_SIZE 32
+    #define DEFAULT_KEY_SIZE       SHA256_DIGEST_LENGTH
     
     typedef std::array<uint8_t, DEFAULT_KEY_SIZE> KeyBytes;
 
+    
     static const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;
     
     namespace internal  {
@@ -43,9 +43,9 @@ namespace tfsecured {
                                  const uint32_t content_size);
     }
     
-    typedef Status (*Decryptor)(const KeyBytes &key_bytes,
-                                std::vector<uint8_t> &input_content,
-                                const uint32_t content_size);
+    typedef std::function<Status(const KeyBytes &key_bytes,
+                                 std::vector<uint8_t> &input_content,
+                                 const uint32_t content_size)> Decryptor;
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
                                   GraphDef *graph,
@@ -93,7 +93,12 @@ namespace tfsecured {
                                      GraphDef *graph,
                                      const std::string &key256) {
         KeyBytes hashKey;
-        picosha2::hash256_bytes(key256, hashKey);
+        
+        SHA256_CTX sha256;
+        SHA256_Init(&sha256);
+        SHA256_Update(&sha256, key256.c_str(), key256.size());
+        SHA256_Final(hashKey.data(), &sha256);
+        
         return GraphDefDecrypt(modelPath,
                                graph, hashKey,
                                internal::decryptAES);
