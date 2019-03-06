@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		224EBEA120DE468100A69696 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */; };
 		224EBEA220DE468100A69696 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 224EBEA020DE468100A69696 /* saved_model.pb */; };
-		226498C920D3E29200A07860 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 226498C420D3E29200A07860 /* aes.c */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
@@ -27,13 +26,10 @@
 
 /* Begin PBXFileReference section */
 		064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2211FEFA2230877200CDAC17 /* GraphDefDecryptorInternals.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptorInternals.hpp; sourceTree = "<group>"; };
 		224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
 		224EBEA020DE468100A69696 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = saved_model.pb; sourceTree = "<group>"; };
-		226498C420D3E29200A07860 /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
-		226498C520D3E29200A07860 /* aes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aes.hpp; sourceTree = "<group>"; };
 		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
-		226498C720D3E29200A07860 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
-		226498C820D3E29200A07860 /* picosha2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
 		22BDBC11209BA4CB00B6E2A3 /* UtilHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilHeaders.h; sourceTree = "<group>"; };
@@ -97,8 +93,8 @@
 		226498C320D3E29200A07860 /* TFSecured */ = {
 			isa = PBXGroup;
 			children = (
-				22CCE8AD2146BED40040282E /* internal */,
 				226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */,
+				2211FEFA2230877200CDAC17 /* GraphDefDecryptorInternals.hpp */,
 			);
 			name = TFSecured;
 			path = ../../TFSecured;
@@ -157,17 +153,6 @@
 				22D781F5209AFFF700666838 /* SecMatmulOp.cpp */,
 			);
 			path = ops;
-			sourceTree = "<group>";
-		};
-		22CCE8AD2146BED40040282E /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				226498C720D3E29200A07860 /* aes.h */,
-				226498C820D3E29200A07860 /* picosha2.hpp */,
-				226498C420D3E29200A07860 /* aes.c */,
-				226498C520D3E29200A07860 /* aes.hpp */,
-			);
-			path = internal;
 			sourceTree = "<group>";
 		};
 		22D781F8209B0ACD00666838 /* utils */ = {
@@ -314,7 +299,6 @@
 				22D781F7209AFFF700666838 /* SecMatmulOp.cpp in Sources */,
 				22D78203209B10B100666838 /* NSError+Util.m in Sources */,
 				22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */,
-				226498C920D3E29200A07860 /* aes.c in Sources */,
 				22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */,
 				22C03CEA209A5F330018285A /* ViewController.swift in Sources */,
 				22D781FF209B0E1E00666838 /* TFPredictor.mm in Sources */,
