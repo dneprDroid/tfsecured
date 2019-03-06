@@ -55,6 +55,12 @@ namespace tfsecured {
                                  std::vector<uint8_t> &input_content,
                                  const uint32_t content_size) {
             
+            if (input_content.size() <= AES_INIT_VECTOR_SIZE) {
+                return errors::InvalidArgument("Input encrypted content size = ",
+                                               input_content.size(),
+                                               " is too small for AES CBC decryption.");
+            }
+            
             /*** Initialization ***/
             
             EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();

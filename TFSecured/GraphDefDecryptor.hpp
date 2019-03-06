@@ -29,6 +29,9 @@ namespace tfsecured {
                                   const KeyBytes &keyByteArray,
                                   const Decryptor decryptor) {
         
+        if (!graph) {
+            return errors::InvalidArgument("GraphDef object isn't allocated");
+        }
         std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
         std::vector<uint8_t> bytes;
         if (!file.eof() && !file.fail()) {
