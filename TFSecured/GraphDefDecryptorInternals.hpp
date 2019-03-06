@@ -43,11 +43,11 @@ namespace tfsecured {
     namespace internal {
         
         
-        inline void calculateSha256(const char *input, const size_t input_len,
+        inline void calculateSha256(const char *key, const size_t key_len,
                                     unsigned char *out) {
             SHA256_CTX sha256;
             SHA256_Init(&sha256);
-            SHA256_Update(&sha256, input, input_len);
+            SHA256_Update(&sha256, key, key_len);
             SHA256_Final(out, &sha256);
         }
         
@@ -81,7 +81,7 @@ namespace tfsecured {
             
             int p_len = (int)input_content.size();
             int f_len = 0;
-            std::vector<unsigned char> result_buffer(p_len);
+            std::vector<uint8_t> result_buffer(p_len);
             
             status = EVP_DecryptUpdate(ctx,
                                        result_buffer.data(), &p_len,
