@@ -15,29 +15,36 @@
 #include <tensorflow/core/framework/shape_inference.h>
 #include <iostream>
 #include <fstream>
+
+#include <openssl/evp.h>
+#include <openssl/aes.h>
+#include <openssl/err.h>
+
 #include "internal/picosha2.hpp"
-#include "internal/aes.hpp"
 
 using namespace tensorflow;
 
 namespace tfsecured {
-
+    
+    #define CHECK_AES_STATUS(status, ctx, msg) if (status == 0) {                   \
+                                                EVP_CIPHER_CTX_cleanup(ctx);        \
+                                                EVP_CIPHER_CTX_free(ctx);           \
+                                                return errors::DataLoss(msg);       \
+                                               }
     #define DEFAULT_KEY_SIZE 32
     
     typedef std::array<uint8_t, DEFAULT_KEY_SIZE> KeyBytes;
 
-    static const int32_t AES_BLOCK_SIZE       = AES_BLOCKLEN;
     static const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;
     
     namespace internal  {
-        template<typename In>
         inline Status decryptAES(const KeyBytes &key_bytes,
-                                 std::vector<In> &input_content,
+                                 std::vector<uint8_t> &input_content,
                                  const uint32_t content_size);
     }
     
     typedef Status (*Decryptor)(const KeyBytes &key_bytes,
-                                std::vector<char> &input_content,
+                                std::vector<uint8_t> &input_content,
                                 const uint32_t content_size);
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
@@ -46,14 +53,14 @@ namespace tfsecured {
                                   const Decryptor decryptor) {
         
         std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
-        std::vector<char> bytes;
+        std::vector<uint8_t> bytes;
         if (!file.eof() && !file.fail()) {
             file.seekg(0, std::ios_base::end);
             std::streampos fileSize = file.tellg();
             bytes.resize(fileSize);
             
             file.seekg(0, std::ios_base::beg);
-            file.read(&bytes[0], fileSize);
+            file.read((char*)&bytes[0], fileSize);
         } else {
             return errors::DataLoss("Can't read file at ", modelPath);
         }
@@ -63,6 +70,12 @@ namespace tfsecured {
             return status;
         }
         if (!graph->ParseFromArray(bytes.data(), (int)bytes.size())) {
+#ifdef DEBUG
+            std::cout << "Invalid data: "
+                      << std::string(bytes.begin(), bytes.end())
+                      << std::endl;
+            std::cout << "----------\nend invalid data block" << std::endl;;
+#endif
             return errors::DataLoss("Can't parse ", modelPath, " as binary proto");
         }
         return Status::OK();
@@ -80,40 +93,54 @@ namespace tfsecured {
                                      GraphDef *graph,
                                      const std::string &key256) {
         KeyBytes hashKey;
-        
         picosha2::hash256_bytes(key256, hashKey);
         return GraphDefDecrypt(modelPath,
                                graph, hashKey,
                                internal::decryptAES);
     }
  
-    template<typename In>
     inline Status internal::decryptAES(const KeyBytes &key_bytes,
-                                       std::vector<In> &input_content,
+                                       std::vector<uint8_t> &input_content,
                                        const uint32_t content_size) {
-        if (input_content.size() < AES_INIT_VECTOR_SIZE) {
-            return errors::InvalidArgument("Input encrypted content size = ",
-                                           input_content.size(),
-                                           " is too small for AES CBC decryption.");
-        }
-        struct AES_ctx ctx;
+        
+        /*** Initialization ***/
+        
+        EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+        
+        int status = 1;
+        
         const std::vector<uint8_t> iv_bytes(input_content.begin(),
                                             input_content.begin() + AES_INIT_VECTOR_SIZE);
+
+        EVP_CIPHER_CTX_init(ctx);
+        status = EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key_bytes.data(), iv_bytes.data());
+        CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptInit_ex Error");
         
-        AES_init_ctx_iv(&ctx, key_bytes.data(), iv_bytes.data());
+        EVP_CIPHER_CTX_set_key_length(ctx, EVP_MAX_KEY_LENGTH);
         
-        input_content.erase(input_content.begin(),
-                            input_content.begin() + AES_INIT_VECTOR_SIZE);
+        /*** Decryption ***/
         
-        AES_CBC_decrypt_buffer(&ctx, reinterpret_cast<uint8_t*>(input_content.data()), content_size-AES_INIT_VECTOR_SIZE);
+        int p_len = (int)input_content.size();
+        int f_len = 0;
+        std::vector<unsigned char> result_buffer(p_len);
         
-        const size_t size = input_content.size();
-        const int last_index = (int)input_content[size - 1];
-        if (last_index < 0 || last_index >= size) {
-            return errors::InvalidArgument("Decryption failed for this key.");
-        }
-        size_t size_without_padding = size - last_index;
-        input_content.resize(size_without_padding);
+        status = EVP_DecryptUpdate(ctx,
+                                   result_buffer.data(), &p_len,
+                                   input_content.data() + AES_INIT_VECTOR_SIZE,
+                                   (int) input_content.size() - AES_INIT_VECTOR_SIZE);
+        CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptUpdate Error");
+
+        status = EVP_DecryptFinal_ex(ctx, result_buffer.data() + p_len, &f_len);
+        CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptFinal_ex Error");
+        
+        EVP_CIPHER_CTX_cleanup(ctx);
+        EVP_CIPHER_CTX_free(ctx);
+        
+        int result_len = p_len + f_len;
+        result_buffer.resize(result_len);
+        
+        input_content = result_buffer;
+        
         return Status::OK();
     }
 }
