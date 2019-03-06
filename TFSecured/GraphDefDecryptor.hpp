@@ -19,9 +19,9 @@ using namespace tensorflow;
 namespace tfsecured {
     
     
-    typedef std::function<Status(const KeyBytes &key_bytes,
-                                 std::vector<uint8_t> &input_content,
-                                 const uint32_t content_size)> Decryptor;
+    typedef std::function<tensorflow::Status(const KeyBytes &key_bytes,
+                                             std::vector<uint8_t> &input_content,
+                                             const uint32_t content_size)> Decryptor;
     
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
