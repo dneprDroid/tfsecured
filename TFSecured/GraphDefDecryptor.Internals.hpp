@@ -33,9 +33,8 @@ namespace tfsecured {
                                                 EVP_CIPHER_CTX_free(ctx);           \
                                                 return errors::DataLoss(msg);       \
                                               }
-    #define DEFAULT_KEY_SIZE       SHA256_DIGEST_LENGTH
 
-    typedef std::array<uint8_t, DEFAULT_KEY_SIZE> KeyBytes;
+    typedef std::array<uint8_t, SHA256_DIGEST_LENGTH> KeyBytes;
 
 
     static const int32_t AES_INIT_VECTOR_SIZE = AES_BLOCK_SIZE;

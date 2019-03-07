@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "GraphDefDecryptorInternals.hpp"
+#include "GraphDefDecryptor.Internals.hpp"
 
 using namespace tensorflow;
 

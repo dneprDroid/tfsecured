@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2211FEFA2230877200CDAC17 /* GraphDefDecryptorInternals.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptorInternals.hpp; sourceTree = "<group>"; };
+		2211FEFA2230877200CDAC17 /* GraphDefDecryptor.Internals.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.Internals.hpp; sourceTree = "<group>"; };
 		224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
 		224EBEA020DE468100A69696 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = saved_model.pb; sourceTree = "<group>"; };
 		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */,
-				2211FEFA2230877200CDAC17 /* GraphDefDecryptorInternals.hpp */,
+				2211FEFA2230877200CDAC17 /* GraphDefDecryptor.Internals.hpp */,
 			);
 			name = TFSecured;
 			path = ../../TFSecured;
