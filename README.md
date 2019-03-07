@@ -8,9 +8,9 @@ You may use random string with random length like a key, then library calculates
 
 ## Usage 
 
-Copy sources from [TFSecured](https://github.com/dneprDroid/TFSecured/tree/master/TFSecured) dir into your project.
+Copy sources from [TFSecured](/TFSecured) dir into your project.
  
-C++ Usage (see [TFPredictor.mm](https://github.com/dneprDroid/TFSecured/blob/master/iosDemo/TFSecured-iOS/tf/predict/TFPredictor.mm)):
+C++ usage (see [TFPredictor.mm](/iosDemo/TFSecured-iOS/tf/predict/TFPredictor.mm)):
 
 ```cpp
 
@@ -38,7 +38,7 @@ C++ Usage (see [TFPredictor.mm](https://github.com/dneprDroid/TFSecured/blob/mas
 ```
 
 
-Encrypt model via python script (see [encrypt_model.py](https://github.com/dneprDroid/TFSecured/blob/master/python/encrypt_model.py)):
+Encrypt model via python script (see [encrypt_model.py](/python/encrypt_model.py)):
 
 ```bash
 $ python encrypt_model.py <INPUT_PB_MODEL>  \
@@ -47,6 +47,9 @@ $ python encrypt_model.py <INPUT_PB_MODEL>  \
 
 ```
 
+## OpenSSL
+
+You may use a version of TFSecured with OpenSSL, it shows better performance on some platforms - check out the branch  [feature/OpenSSL](../../tree/feature/OpenSSL)
 
 ## iOS Demo (Digit recognizer)
 
