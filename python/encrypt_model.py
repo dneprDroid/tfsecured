@@ -19,18 +19,20 @@ except:
 class AESCipher(object):
 
     def __init__(self, _key):
-        self.bs = 32
+        self.bs = 16
+        print('Using block size = %s' % self.bs)
         self.key = hashlib.sha256(_key.encode()).digest()
+        print('Hash of key="%s" is "%s"' % (_key, self.key))
 
     def encrypt(self, raw):
         raw = self._pad(raw)
         iv = Random.new().read(AES.block_size)
+        print('Iv: "%s"' % iv)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return iv + cipher.encrypt(raw)
 
     def decrypt(self, enc):
         iv = enc[:AES.block_size]
-        print('Iv: %s' % iv)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return self._unpad(cipher.decrypt(enc[AES.block_size:]))  # .decode('utf-8')
 

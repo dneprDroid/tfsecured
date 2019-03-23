@@ -29,6 +29,7 @@ namespace tfsecured {
 
 
     #define CHECK_AES_STATUS(status, ctx, msg) if (status == 0) {                   \
+                                                ERR_print_errors_fp(stderr);        \
                                                 EVP_CIPHER_CTX_cleanup(ctx);        \
                                                 EVP_CIPHER_CTX_free(ctx);           \
                                                 return errors::DataLoss(msg);       \
@@ -54,6 +55,7 @@ namespace tfsecured {
                                  std::vector<uint8_t> &input_content,
                                  const uint32_t content_size) {
             
+            std::cout << "OpenSSL version: " << OPENSSL_VERSION_TEXT << std::endl;
             if (input_content.size() <= AES_INIT_VECTOR_SIZE) {
                 return errors::InvalidArgument("Input encrypted content size = ",
                                                input_content.size(),
@@ -73,8 +75,6 @@ namespace tfsecured {
             status = EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr,
                                         key_bytes.data(), iv_bytes.data());
             CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptInit_ex Error");
-            
-            EVP_CIPHER_CTX_set_key_length(ctx, EVP_MAX_KEY_LENGTH);
             
             /*** Decryption ***/
             
