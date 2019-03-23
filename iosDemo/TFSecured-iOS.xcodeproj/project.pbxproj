@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		224EBEA120DE468100A69696 /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */; };
+		2215591522463D6200B1667F /* frozen_inference_graph-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 2215591422463D6200B1667F /* frozen_inference_graph-encrypted.pb */; };
+		2215591722464B8600B1667F /* deeplabv3.pb in Resources */ = {isa = PBXBuildFile; fileRef = 2215591622464B8600B1667F /* deeplabv3.pb */; };
 		224EBEA220DE468100A69696 /* saved_model.pb in Resources */ = {isa = PBXBuildFile; fileRef = 224EBEA020DE468100A69696 /* saved_model.pb */; };
+		2258668122463ADD00C1B4CA /* saved_model-encrypted.pb in Resources */ = {isa = PBXBuildFile; fileRef = 2258668022463ADD00C1B4CA /* saved_model-encrypted.pb */; };
 		22BDBC0D209B9F0500B6E2A3 /* MNISTPredictor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */; };
 		22BDBC13209BAD6A00B6E2A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDBC12209BAD6A00B6E2A3 /* UIImage+Utils.swift */; };
 		22C03CE8209A5F330018285A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C03CE7209A5F330018285A /* AppDelegate.swift */; };
@@ -27,8 +29,10 @@
 /* Begin PBXFileReference section */
 		064DDC4CD465B07A215E3066 /* Pods_TFSecured_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFSecured_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2211FEFA2230877200CDAC17 /* GraphDefDecryptor.Internals.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.Internals.hpp; sourceTree = "<group>"; };
-		224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
+		2215591422463D6200B1667F /* frozen_inference_graph-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "frozen_inference_graph-encrypted.pb"; sourceTree = "<group>"; };
+		2215591622464B8600B1667F /* deeplabv3.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = deeplabv3.pb; sourceTree = "<group>"; };
 		224EBEA020DE468100A69696 /* saved_model.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = saved_model.pb; sourceTree = "<group>"; };
+		2258668022463ADD00C1B4CA /* saved_model-encrypted.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saved_model-encrypted.pb"; sourceTree = "<group>"; };
 		226498C620D3E29200A07860 /* GraphDefDecryptor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphDefDecryptor.hpp; sourceTree = "<group>"; };
 		22BDBC0B209B9EF500B6E2A3 /* MNISTPredictor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNISTPredictor.h; sourceTree = "<group>"; };
 		22BDBC0C209B9F0500B6E2A3 /* MNISTPredictor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MNISTPredictor.mm; sourceTree = "<group>"; };
@@ -83,7 +87,9 @@
 		224EBE9E20DE468100A69696 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				224EBE9F20DE468100A69696 /* saved_model-encrypted.pb */,
+				2215591622464B8600B1667F /* deeplabv3.pb */,
+				2215591422463D6200B1667F /* frozen_inference_graph-encrypted.pb */,
+				2258668022463ADD00C1B4CA /* saved_model-encrypted.pb */,
 				224EBEA020DE468100A69696 /* saved_model.pb */,
 			);
 			name = models;
@@ -261,10 +267,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				22C03CF2209A5F330018285A /* LaunchScreen.storyboard in Resources */,
+				2215591722464B8600B1667F /* deeplabv3.pb in Resources */,
 				22C03CEF209A5F330018285A /* Assets.xcassets in Resources */,
 				224EBEA220DE468100A69696 /* saved_model.pb in Resources */,
-				224EBEA120DE468100A69696 /* saved_model-encrypted.pb in Resources */,
+				2258668122463ADD00C1B4CA /* saved_model-encrypted.pb in Resources */,
 				22C03CED209A5F330018285A /* Main.storyboard in Resources */,
+				2215591522463D6200B1667F /* frozen_inference_graph-encrypted.pb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     private func recognize(image: UIImage) {
         DispatchQueue.global().async {
             
-            guard let modelPath = Bundle.main.path(forResource: "saved_model-encrypted", ofType: "pb") else {
+            guard let modelPath = Bundle.main.path(forResource: "frozen_inference_graph-encrypted",
+                                                   ofType: "pb") else {
                 print("Model doesn't exist!")
                 return
             }
@@ -35,18 +36,18 @@ class ViewController: UIViewController {
             let predictor = MNISTPredictor.create(withPath:   modelPath,
                                                   inputNode:  inputNode,
                                                   outputNode: outputNode)
-            predictor.loadModel(key: "BXKE0351PD9TXZ7XA8CK8XZU8XBGDM",
+            predictor.loadModel(key: "bigsecret",
                                 error: { error in
                 print("Loading proto file is failed.\n\(error.localizedDescription)")
             })
-            let inputSize = CGFloat(MNIST_IMAGE_PIXEL_SIDE_SIZE)
-            let inputImage = image.resize(targetSize: inputSize)
-            predictor.predict(image: inputImage,
-                              success: { digit in
-                print("Recognized Digit: \(digit)")
-            }, error: {
-                print("Recognition is failed!")
-            })
+//            let inputSize = CGFloat(MNIST_IMAGE_PIXEL_SIDE_SIZE)
+//            let inputImage = image.resize(targetSize: inputSize)
+//            predictor.predict(image: inputImage,
+//                              success: { digit in
+//                print("Recognized Digit: \(digit)")
+//            }, error: {
+//                print("Recognition is failed!")
+//            })
             
         }
     }
