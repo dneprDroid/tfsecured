@@ -1,4 +1,4 @@
-## TFSecured
+## TFSecured-OpenSSL
 
 Small library for tensorflow proto models (*.pb) encryption/decryption.
 
