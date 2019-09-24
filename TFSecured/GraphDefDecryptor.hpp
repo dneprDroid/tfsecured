@@ -1,12 +1,5 @@
-//
-//  GraphDefDecryptor.hpp
-//  TFSecured
-//
-//  Created by user on 6/14/18.
-//  Copyright © 2018 user. All rights reserved.
-//
-
-#include <stdio.h>
+#ifndef GraphDefDecryptor__hpp
+#define GraphDefDecryptor__hpp
 
 
 #include <iostream>
@@ -19,19 +12,16 @@ using namespace tensorflow;
 namespace tfsecured {
     
     
-    typedef std::function<tensorflow::Status(const KeyBytes &key_bytes,
-                                             std::vector<uint8_t> &input_content,
+    typedef std::function<tensorflow::Status(const KeyBytes &keyBytes,
+                                             std::vector<uint8_t> &inputContent,
                                              const uint32_t content_size)> Decryptor;
     
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
-                                  GraphDef *graph,
+                                  GraphDef &graph,
                                   const KeyBytes &keyByteArray,
                                   const Decryptor decryptor) {
         
-        if (!graph) {
-            return errors::InvalidArgument("GraphDef object isn't allocated");
-        }
         std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
         std::vector<uint8_t> bytes;
         if (!file.eof() && !file.fail()) {
@@ -49,7 +39,7 @@ namespace tfsecured {
         if (!status.ok()) {
             return status;
         }
-        if (!graph->ParseFromArray(bytes.data(), (int)bytes.size())) {
+        if (graph.ParseFromArray(bytes.data(), (int)bytes.size())) {
 #ifdef DEBUG
             std::cout << "Invalid data: "
                       << std::string(bytes.begin(), bytes.end())
@@ -63,7 +53,7 @@ namespace tfsecured {
     
     
     inline Status GraphDefDecrypt(const std::string &modelPath,
-                                  GraphDef *graph,
+                                  GraphDef &graph,
                                   const KeyBytes &keyByteArray) {
         return GraphDefDecrypt(modelPath,
                                graph, keyByteArray,
@@ -72,7 +62,7 @@ namespace tfsecured {
     
     
     inline Status GraphDefDecryptAES(const std::string &modelPath,
-                                     GraphDef *graph,
+                                     GraphDef &graph,
                                      const std::string &key256) {
         KeyBytes hashKey;
         
@@ -86,3 +76,5 @@ namespace tfsecured {
  
     
 }
+
+#endif /* GraphDefDecryptor__hpp */

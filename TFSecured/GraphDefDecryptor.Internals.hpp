@@ -1,13 +1,5 @@
-//
-//  GraphDefDecryptorInternals.hpp
-//  TFSecured-iOS
-//
-//  Created by user on 3/7/19.
-//  Copyright © 2019 user. All rights reserved.
-//
-
-
-#include <stdio.h>
+#ifndef GraphDefDecryptor_Internals__hpp
+#define GraphDefDecryptor_Internals__hpp
 
 #include <iostream>
 #include <fstream>
@@ -43,22 +35,22 @@ namespace tfsecured {
     namespace internal {
         
         
-        inline void calculateSha256(const char *key, const size_t key_len,
+        inline void calculateSha256(const char *key, const size_t keyLen,
                                     unsigned char *out) {
             SHA256_CTX sha256;
             SHA256_Init(&sha256);
-            SHA256_Update(&sha256, key, key_len);
+            SHA256_Update(&sha256, key, keyLen);
             SHA256_Final(out, &sha256);
         }
         
-        inline Status decryptAES(const KeyBytes &key_bytes,
-                                 std::vector<uint8_t> &input_content,
-                                 const uint32_t content_size) {
+        inline Status decryptAES(const KeyBytes &keyBytes,
+                                 std::vector<uint8_t> &inputContent,
+                                 const uint32_t contentSize) {
             
             std::cout << "OpenSSL version: " << OPENSSL_VERSION_TEXT << std::endl;
-            if (input_content.size() <= AES_INIT_VECTOR_SIZE) {
+            if (inputContent.size() <= AES_INIT_VECTOR_SIZE) {
                 return errors::InvalidArgument("Input encrypted content size = ",
-                                               input_content.size(),
+                                               inputContent.size(),
                                                " is too small for AES CBC decryption.");
             }
             
@@ -68,27 +60,27 @@ namespace tfsecured {
             
             int status = 1;
             
-            const std::vector<uint8_t> iv_bytes(input_content.begin(),
-                                                input_content.begin() + AES_INIT_VECTOR_SIZE);
+            const std::vector<uint8_t> ivBytes(inputContent.begin(),
+                                               inputContent.begin() + AES_INIT_VECTOR_SIZE);
             
             EVP_CIPHER_CTX_init(ctx);
             status = EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr,
-                                        key_bytes.data(), iv_bytes.data());
+                                        keyBytes.data(), ivBytes.data());
             CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptInit_ex Error");
             
             /*** Decryption ***/
             
-            int p_len = (int)input_content.size();
-            int f_len = 0;
-            std::vector<uint8_t> result_buffer(p_len);
+            int pLen = (int)inputContent.size();
+            int fLen = 0;
+            std::vector<uint8_t> resultBuffer(pLen);
             
             status = EVP_DecryptUpdate(ctx,
-                                       result_buffer.data(), &p_len,
-                                       input_content.data() + AES_INIT_VECTOR_SIZE,
-                                       (int) input_content.size() - AES_INIT_VECTOR_SIZE);
+                                       resultBuffer.data(), &pLen,
+                                       inputContent.data() + AES_INIT_VECTOR_SIZE,
+                                       (int) inputContent.size() - AES_INIT_VECTOR_SIZE);
             CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptUpdate Error");
             
-            status = EVP_DecryptFinal_ex(ctx, result_buffer.data() + p_len, &f_len);
+            status = EVP_DecryptFinal_ex(ctx, resultBuffer.data() + pLen, &fLen);
             CHECK_AES_STATUS(status, ctx, "[OpenSSL] EVP_DecryptFinal_ex Error");
             
             /*** Cleanup ***/
@@ -96,13 +88,15 @@ namespace tfsecured {
             EVP_CIPHER_CTX_cleanup(ctx);
             EVP_CIPHER_CTX_free(ctx);
             
-            int result_len = p_len + f_len;
-            result_buffer.resize(result_len);
+            int resultLen = pLen + fLen;
+            resultBuffer.resize(resultLen);
             
-            input_content = result_buffer;
+            inputContent = resultBuffer;
             
             return Status::OK();
         }
     }
 
 }
+
+#endif /* GraphDefDecryptor_Internals__hpp */
