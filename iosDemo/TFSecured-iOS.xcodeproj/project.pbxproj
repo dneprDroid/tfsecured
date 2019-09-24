@@ -445,7 +445,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38YYV4LCDS;
+				DEVELOPMENT_TEAM = V57UP5DXF5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers'",
@@ -471,7 +471,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38YYV4LCDS;
+				DEVELOPMENT_TEAM = V57UP5DXF5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"'${SRCROOT}/Pods/TensorFlow-experimental/Frameworks/tensorflow_experimental.framework/Headers'",

@@ -24,7 +24,7 @@
 using namespace tensorflow;
 
 @interface TFPredictor () {
-    GraphDef *graph;
+    GraphDef graph;
     std::string inNode;
     std::string outNode;
 }
@@ -41,18 +41,17 @@ using namespace tensorflow;
     
     TFPredictor *pred = [self new];
     pred.modelPath = modelPath;
-    pred->inNode  = std::string([inNode cStringUsingEncoding:NSUTF8StringEncoding]);
-    pred->outNode = std::string([outNode cStringUsingEncoding:NSUTF8StringEncoding]);
-    pred->graph = new GraphDef;
+    pred->inNode  = std::string([inNode UTF8String]);
+    pred->outNode = std::string([outNode UTF8String]);
     return pred;
 }
 
 
 - (void)loadModelWithKey:(NSString*)key  error:(nullable TFErrorCallback) callback {
     
-    std::string keyUnhashed([key cStringUsingEncoding:NSUTF8StringEncoding]);
+    std::string keyUnhashed([key UTF8String]);
     
-    const char * path = [self.modelPath cStringUsingEncoding: NSUTF8StringEncoding];
+    const char * path = [self.modelPath UTF8String];
     std::cout << "Loading pb model from path: " << path << std::endl;
     
     auto status = tfsecured::GraphDefDecryptAES(path, graph, keyUnhashed);
@@ -66,11 +65,11 @@ using namespace tensorflow;
     }
 }
 
-- (void)predictTensor:(const Tensor&)input output: (Tensor*)output {
+- (void)predictTensor:(const Tensor&)input output: (Tensor&)output {
     SessionOptions options;
     Status status;
     std::unique_ptr<Session> session(NewSession(options));
-    status = session->Create(*graph);
+    status = session->Create(graph);
     if (!status.ok()) {
         printf("Error creating session: %s\n", status.error_message().c_str());
         return;
@@ -86,17 +85,16 @@ using namespace tensorflow;
         std::cout << "Session running is failed!" << "\n";
         return;
     }
-    if (outputs.size() == 0) {
+    if (outputs.empty()) {
         std::cout << "Outputs are empty!" << "\n";
         return;
     }
-    *output = outputs[0];
+    output = outputs[0];
 }
 
 
 - (void)dealloc {
     printf("...... TFPredictor deallocation ......\n");
-    delete graph;
 }
 
 @end

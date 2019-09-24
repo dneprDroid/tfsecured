@@ -35,7 +35,7 @@ typedef void(^TFErrorCallback)(NSError *error);
 
 #ifdef __cplusplus
 
-- (void)predictTensor:(const tensorflow::Tensor&)input output: (tensorflow::Tensor*)output;
+- (void)predictTensor:(const tensorflow::Tensor&)input output: (tensorflow::Tensor&)output;
 
 #endif
 
