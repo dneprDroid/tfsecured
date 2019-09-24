@@ -5,6 +5,12 @@
 #include <iostream>
 #include <fstream>
 
+#include <tensorflow/core/framework/op.h>
+#include <tensorflow/core/framework/op_kernel.h>
+#include <tensorflow/core/public/session.h>
+
+#include <tensorflow/core/framework/shape_inference.h>
+
 #include "GraphDefDecryptor.Internals.hpp"
 
 using namespace tensorflow;
