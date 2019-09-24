@@ -1,4 +1,4 @@
-## TFSecured | [TFSecured-OpenSSL](../../tree/feature/OpenSSL)
+## TFSecured
 
 Small library for tensorflow proto models (*.pb) encryption/decryption.
 
@@ -47,9 +47,11 @@ $ python encrypt_model.py <INPUT_PB_MODEL>  \
 
 ```
 
-## OpenSSL
+## Dependencies
 
-You may use a version of TFSecured with OpenSSL, it shows better performance on some platforms - check out the branch  [feature/OpenSSL](../../tree/feature/OpenSSL)
+* TensorFlow
+
+* OpenSSL
 
 ## iOS Demo (Digit recognizer)
 

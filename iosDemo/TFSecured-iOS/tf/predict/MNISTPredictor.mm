@@ -42,14 +42,6 @@ void toGrayscaleTensor(const std::vector<unsigned char> &imageBytes,
             T gray = (r + g + b)/3/255;
             long pos = y * width + x;
             
-//#if DEBUG
-//            std::cout   << "Pixel at " << pos << " ("
-//                        << r << ", "
-//                        << g << ", "
-//                        << b << ") => "
-//                        <<  gray  << "\n";
-//#endif
-            
             input_tensor_mapped(pos) = gray;
         }
     }
@@ -81,7 +73,7 @@ using namespace tensorflow;
                                                  &in);
     std::cout << "Input tensor shape: " << in.shape().DebugString() << "\n";
     Tensor out;
-    [self predictTensor:in output:&out];
+    [self predictTensor:in output:out];
     
     std::cout << "Output tensor shape: " << out.shape().DebugString() << "\n";
     
@@ -106,7 +98,11 @@ using namespace tensorflow;
 }
 
 - (void)dealloc {
+    
+#ifdef DEBUG
     printf("MNISTPredictor dealloc.\n");
+#endif
+    
 }
 
 @end
