@@ -39,7 +39,7 @@ namespace tfsecured {
         if (!status.ok()) {
             return status;
         }
-        if (graph.ParseFromArray(bytes.data(), (int)bytes.size())) {
+        if (!graph.ParseFromArray(bytes.data(), (int)bytes.size())) {
 #ifdef DEBUG
             std::cout << "Invalid data: "
                       << std::string(bytes.begin(), bytes.end())

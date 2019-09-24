@@ -98,7 +98,11 @@ using namespace tensorflow;
 }
 
 - (void)dealloc {
+    
+#ifdef DEBUG
     printf("MNISTPredictor dealloc.\n");
+#endif
+    
 }
 
 @end

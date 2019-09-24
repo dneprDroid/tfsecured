@@ -74,7 +74,7 @@ using namespace tensorflow;
         printf("Error creating session: %s\n", status.error_message().c_str());
         return;
     }
-    std::cout << "Tensor input shape: " << input.shape().DebugString() << "\n";
+    std::cout << "Tensor input shape: " << input.shape().DebugString() << std::endl;
     
     std::vector<tensorflow::Tensor> outputs;
     status = session->Run({{inNode, input}},
@@ -82,11 +82,11 @@ using namespace tensorflow;
                           {},
                           &outputs);
     if (!status.ok()) {
-        std::cout << "Session running is failed!" << "\n";
+        std::cout << "Session running is failed!" << std::endl;
         return;
     }
     if (outputs.empty()) {
-        std::cout << "Outputs are empty!" << "\n";
+        std::cout << "Outputs are empty!" << std::endl;
         return;
     }
     output = outputs[0];
@@ -94,7 +94,11 @@ using namespace tensorflow;
 
 
 - (void)dealloc {
+    
+#ifdef DEBUG
     printf("...... TFPredictor deallocation ......\n");
+#endif
+    
 }
 
 @end
