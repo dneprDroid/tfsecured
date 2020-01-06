@@ -8,21 +8,28 @@ import (
 	"crypto/aes"
 )
 
+const blockSize = 16
+
 func decryptAES(key []byte, data []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		return nil, err
+		return nil, err 
 	}
-	if len(data) < aes.BlockSize {
-		return nil, fmt.Errorf("Invalid data block size: %v", len(data))
+	if len(data) < blockSize {
+		return nil, fmt.Errorf("ciphertext too short: %v", len(data))
 	}
-	iv := data[:aes.BlockSize]
-	msgData := data[aes.BlockSize:]
+	iv := data[:blockSize]
 
-	stream := cipher.NewCFBDecrypter(block, iv)
-	stream.XORKeyStream(msgData, msgData)
+	if len(data) % blockSize != 0 {
+		return nil, fmt.Errorf("ciphertext is not a multiple of the block size: %v", len(data))
+	}
+	result := make([]byte, len(data) - blockSize)
 
-	return msgData, nil
+	mode := cipher.NewCBCDecrypter(block, iv)
+	mode.CryptBlocks(result, data[blockSize:])
+
+	result = result[:len(result)-3]
+	return result, nil 
 }
 
 func encryptAES(key []byte, data []byte) ([]byte, error) {
@@ -30,15 +37,12 @@ func encryptAES(key []byte, data []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	encryptedData := make([]byte, aes.BlockSize + len(data))
-	iv := encryptedData[:aes.BlockSize]
-	if _, err = io.ReadFull(rand.Reader, iv); err != nil {
+	encryptedData := make([]byte, blockSize + len(data))
+	if _, err = io.ReadFull(rand.Reader, encryptedData[:blockSize]); err != nil {
 		return nil, err
 	}
-
-	stream := cipher.NewCFBEncrypter(block, iv)
-	stream.XORKeyStream(encryptedData[aes.BlockSize:], data)
+	stream := cipher.NewCBCDecrypter(block, encryptedData[:blockSize])
+	stream.CryptBlocks(encryptedData[blockSize:], data)
 
 	return encryptedData, nil
 }
