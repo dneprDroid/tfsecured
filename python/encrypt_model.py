@@ -4,6 +4,7 @@ import os
 import sys
 import string
 import random
+import argparse
 
 try:
     from Crypto import Random
@@ -20,14 +21,11 @@ class AESCipher(object):
 
     def __init__(self, _key):
         self.bs = 16
-        print('Using block size = %s' % self.bs)
         self.key = hashlib.sha256(_key.encode()).digest()
-        print('Hash of key="%s" is "%s"' % (_key, self.key))
 
     def encrypt(self, raw):
         raw = self._pad(raw)
         iv = Random.new().read(AES.block_size)
-        print('Iv: "%s"' % iv)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return iv + cipher.encrypt(raw)
 
@@ -43,9 +41,6 @@ class AESCipher(object):
     def _unpad(s):
         return s[:-ord(s[len(s) - 1:])]
 
-
-###############  Util Methods  ###############
-
 def load_graph(path):
     if not tf.gfile.Exists(path):
         raise Exception('File doesn\'t exist at path: %s' % path)
@@ -56,55 +51,26 @@ def load_graph(path):
         tf.import_graph_def(graph_def, name=None)
         return graph_def
 
-
-def generate_output_path(input_path, suffix):
-    filename, file_extension = os.path.splitext(input_path)
-    return filename + suffix + file_extension
-
-
-def random_string(size=30):
-    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(size))
-
-
-def read_arg(index, default=None, err_msg=None):
-    def print_error():
-        if err_msg is not None:
-            raise Exception(err_msg)
-        else:
-            raise Exception('Not found arg with index %s' % index)
-
-    if len(sys.argv) <= index:
-        if default is not None:
-            return default
-        print_error()
-    return sys.argv[index]
-
-
-#############################################
-
 def main():
-    usage = 'python encrypt_model.py <INPUT_PB_MODEL> <OUTPUT_PB_MODEL> <KEY>'
-    print('\nUSAGE: %s\n' % usage)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input-path', type=str, default='demo/models/saved_model.pb')
+    parser.add_argument('-o', '--output-path', type=str, default='demo/models/saved_model-encrypted.pb')
+    parser.add_argument('-k', '--key', type=str)
 
-    # Args:
+    args, _ = parser.parse_known_args()
 
-    input_path = read_arg(1, default='demo/models/saved_model.pb')
-    default_out = generate_output_path(input_path, '-encrypted')
-    output_path = read_arg(2, default=default_out)
-    KEY = read_arg(3, default=random_string())
+    graph_def = load_graph(args.input_path)
 
-    graph_def = load_graph(input_path)
-
-    cipher = AESCipher(KEY)
+    cipher = AESCipher(args.key)
 
     nodes_binary_str = graph_def.SerializeToString()
 
     nodes_binary_str = cipher.encrypt(nodes_binary_str)
 
-    with tf.gfile.GFile(output_path, 'wb') as f:
+    with tf.gfile.GFile(args.output_path, 'wb') as f:
         f.write(nodes_binary_str)
         f.close()
-    print('Saved with key="%s" to %s' % (KEY, output_path))
+    print('Saved with key="%s" to %s' % (args.key, args.output_path))
 
 
 if __name__ == "__main__":
