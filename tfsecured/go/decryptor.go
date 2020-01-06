@@ -7,7 +7,7 @@ import (
 )
 
 type Decryptor struct {
-	key string, 
+	key string
 	buf []byte
 }
 
@@ -23,7 +23,7 @@ func NewDecryptorFile(key string, path string) (*Decryptor, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewDecryptorBytes(key, data)
+	return NewDecryptorBytes(key, data), nil 
 }
 
 func (d *Decryptor) Decrypt() (*tf.Graph, error) {

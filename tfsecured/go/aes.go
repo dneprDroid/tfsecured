@@ -2,6 +2,7 @@ package tfsecured
 
 import (
 	"fmt"
+	"crypto/cipher"
 	"crypto/aes"
 )
 
