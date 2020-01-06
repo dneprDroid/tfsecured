@@ -3,6 +3,7 @@ package tfsecured
 import (
 	"bufio"
 	"bytes"
+	"io/ioutil"
 
 	tf "github.com/tensorflow/tensorflow/tensorflow/go"
 )
@@ -14,7 +15,7 @@ type Encryptor struct {
 
 func NewEncryptorGraph(key string, graph *tf.Graph) (*Encryptor, error) {
 	var buff bytes.Buffer
-    buffWriter := bufio.NewWriter(&b)
+    buffWriter := bufio.NewWriter(&buff)
 	if _, err := graph.WriteTo(buffWriter); err != nil {
 		return nil, err 
 	}
@@ -32,7 +33,7 @@ func NewEncryptorFile(key string, path string) (*Encryptor, error) {
 func NewEncryptorBytes(key string, data []byte) *Encryptor {
 	return &Encryptor{
 		key: key, 
-		data: buff.Bytes(), 
+		data: data, 
 	}
 }
 
