@@ -46,18 +46,22 @@ func constructGraphForImage(
 	s := op.NewScope()
 	input = op.Placeholder(s, tf.String)
 
+	scaled := op.ResizeBilinear(s,
+		op.ExpandDims(s,
+			op.Cast(s,
+				op.DecodeJpeg(s, input, op.DecodeJpegChannels(1)), tf.Float),
+			op.Const(s.SubScope("make_batch"), int32(0))),
+		op.Const(s.SubScope("size"), []int32{h, w}),
+	)
+	normalized := op.Div(s,
+		op.Sub(s,
+			scaled,
+			op.Const(s.SubScope("mean"), mean)),
+		op.Const(s.SubScope("scale"), scale),
+	)
 	output = op.Reshape(s,
 		op.Transpose(s,
-			op.Div(s,
-				op.Sub(s,
-					op.ResizeBilinear(s,
-						op.ExpandDims(s,
-							op.Cast(s,
-								op.DecodeJpeg(s, input, op.DecodeJpegChannels(1)), tf.Float),
-							op.Const(s.SubScope("make_batch"), int32(0))),
-						op.Const(s.SubScope("size"), []int32{h, w})),
-					op.Const(s.SubScope("mean"), mean)),
-				op.Const(s.SubScope("scale"), scale)),
+			normalized,
 			op.Const(s.SubScope("perm"), []int32{0, 3, 1, 2}),
 		),
 		op.Const(s.SubScope("shape"), []int32{1, w * h}),
