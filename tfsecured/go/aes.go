@@ -25,8 +25,8 @@ func decryptAES(key []byte, data []byte) ([]byte, error) {
 	}
 	result := make([]byte, len(data) - blockSize)
 
-	mode := cipher.NewCBCDecrypter(block, iv)
-	mode.CryptBlocks(result, data[blockSize:])
+	stream := cipher.NewCBCDecrypter(block, iv)
+	stream.CryptBlocks(result, data[blockSize:])
 	return unpad(result), nil 
 }
 

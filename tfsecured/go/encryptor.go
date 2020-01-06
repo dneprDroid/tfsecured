@@ -15,7 +15,7 @@ type Encryptor struct {
 
 func NewEncryptorGraph(key string, graph *tf.Graph) (*Encryptor, error) {
 	var buff bytes.Buffer
-    buffWriter := bufio.NewWriter(&buff)
+	buffWriter := bufio.NewWriter(&buff)
 	if _, err := graph.WriteTo(buffWriter); err != nil {
 		return nil, err 
 	}
