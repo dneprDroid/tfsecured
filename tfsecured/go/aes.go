@@ -27,9 +27,7 @@ func decryptAES(key []byte, data []byte) ([]byte, error) {
 
 	mode := cipher.NewCBCDecrypter(block, iv)
 	mode.CryptBlocks(result, data[blockSize:])
-
-	result = result[:len(result)-3]
-	return result, nil 
+	return unpad(result), nil 
 }
 
 func encryptAES(key []byte, data []byte) ([]byte, error) {
@@ -37,12 +35,28 @@ func encryptAES(key []byte, data []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	encryptedData := make([]byte, blockSize + len(data))
+	paddedData := pad(data, blockSize)
+	encryptedData := make([]byte, blockSize + len(paddedData))
 	if _, err = io.ReadFull(rand.Reader, encryptedData[:blockSize]); err != nil {
 		return nil, err
 	}
 	stream := cipher.NewCBCDecrypter(block, encryptedData[:blockSize])
-	stream.CryptBlocks(encryptedData[blockSize:], data)
+	stream.CryptBlocks(encryptedData[blockSize:], paddedData)
 
 	return encryptedData, nil
+}
+
+func pad(data []byte, bs int) []byte {
+	rval := bs - len(data) % bs
+	suffix := make([]byte, rval, rval)
+	return append(data, suffix...)
+}
+
+func unpad(data []byte) []byte {
+	last := data[len(data) - 1]
+	lastIdx := len(data)- int(last)
+	if lastIdx >= len(data) {
+		return data 
+	}
+	return data[:lastIdx]
 }
