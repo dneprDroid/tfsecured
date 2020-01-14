@@ -8,7 +8,7 @@ import (
 
 func main() {
 	key := "BXKE0351PD9TXZ7XA8CK8XZU8XBGDM"
-	path := "../../../python/demo/models/saved_model-encrypted.pb"
+	path := "../../../../python/demo/models/saved_model-encrypted.pb"
 
 	decryptor, err := tfsecured.NewDecryptorFile(key, path)
 	if err != nil {
