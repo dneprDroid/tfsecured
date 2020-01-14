@@ -33,7 +33,7 @@ You may use random string with random length like a key, then library calculates
     // Run session ....
 ```
 
-See [go examples](/examples/go)
+See [go examples](/examples/go).
 
 ### C++
 
