@@ -10,7 +10,12 @@ if(NOT CMAKE_BUILD_TYPE)
 
 endif()
 
-set(SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
+set(
+    SOURCE_FILES 
+    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/img2tensor.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/img2tensor.cpp"
+)
 add_executable(example ${SOURCE_FILES})
 
 set(tfsecured_dir "${CMAKE_CURRENT_SOURCE_DIR}/../../tfsecured/cpp")
@@ -29,6 +34,9 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 
 find_package(Protobuf REQUIRED)
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 target_link_libraries(
     example
 
@@ -36,4 +44,6 @@ target_link_libraries(
     ${Protobuf_LIBRARIES}
     TensorflowCC::TensorflowCC
     tfsecured
+
+    ${OpenCV_LIBS}
 )
