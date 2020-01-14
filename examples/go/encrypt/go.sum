@@ -1,0 +1,9 @@
+github.com/dneprDroid/tfsecured v0.0.1 h1:e9Ee5r+ZxBkzI+FsVTJjp5LNl2WKseCmemj9g32C/pE=
+github.com/dneprDroid/tfsecured v0.0.1/go.mod h1:+2lNkrDPGnJsq3+X+PZ2lXQUI4YQfdTPe9bzFHX0tzQ=
+github.com/dneprDroid/tfsecured v0.0.2 h1:MGegtCdhtxLmB93mKAzZfDeA6+aamHMieYOWcIcbLzo=
+github.com/dneprDroid/tfsecured v0.0.2/go.mod h1:+2lNkrDPGnJsq3+X+PZ2lXQUI4YQfdTPe9bzFHX0tzQ=
+github.com/dneprDroid/tfsecured v0.0.3/go.mod h1:+2lNkrDPGnJsq3+X+PZ2lXQUI4YQfdTPe9bzFHX0tzQ=
+github.com/dneprDroid/tfsecured/tfsecured/go v0.0.0-20200106182100-9fdb10f90c54 h1:tC1QACV15PkI8KEogv/7CGEC/ZhE36233jX4Pp4j1/w=
+github.com/dneprDroid/tfsecured/tfsecured/go v0.0.0-20200106182100-9fdb10f90c54/go.mod h1:aTzZIP+Ri19s/evJv6OPDIy9mp623cKbcRAMyPOnUAM=
+github.com/tensorflow/tensorflow v1.5.0 h1:85Tt32BSeRa81ksWxz70Bl52DRleSZQE3TkptPfizso=
+github.com/tensorflow/tensorflow v1.5.0/go.mod h1:itOSERT4trABok4UOoG+X4BoKds9F3rIsySdn+Lvu90=

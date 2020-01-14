@@ -33,6 +33,8 @@ You may use random string with random length like a key, then library calculates
     // Run session ....
 ```
 
+See [go examples](/examples/go)
+
 ### C++
 
 Copy sources from [tfsecured](/tfsecured) dir into your project (see [CMakeLists.txt](/examples/cpp/CMakeLists.txt))
