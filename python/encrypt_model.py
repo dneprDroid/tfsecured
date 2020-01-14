@@ -47,7 +47,6 @@ def load_graph(path):
     with tf.gfile.GFile(path, 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
-        f.close()
         tf.import_graph_def(graph_def, name=None)
         return graph_def
 
@@ -69,7 +68,6 @@ def main():
 
     with tf.gfile.GFile(args.output_path, 'wb') as f:
         f.write(nodes_binary_str)
-        f.close()
     print('Saved with key="%s" to %s' % (args.key, args.output_path))
 
 
