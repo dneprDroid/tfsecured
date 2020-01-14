@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
         printError(status, "Session create");
         return 1;
     }
-    tensorflow::Tensor input = loadImgTensor(imgPath, 29, 29);
+    tensorflow::Tensor input = loadImgTensor(imgPath, 28, 28);
     vector<tensorflow::Tensor> outputs;
 
     status = session->Run(
@@ -57,24 +57,17 @@ int main(int argc, const char * argv[]) {
     }
     auto output = outputs[0];
     auto flatTensor = output.flat<float>();
-    int digit = -1;
-    float digitProb = -1;
     
     for (int i=0; i < flatTensor.size(); ++i) {
         float prob = flatTensor(i);
         std::cout << "Probability for digit " << (i + 1) << " = " << prob << "\n";
-        if (prob > digitProb) {
-            digitProb = prob;
-            digit = i + 1;
-        }
     }
-    std::cout << "Digit: " << digit << "\n";
     return 0;
 }
 
 void printError(const tensorflow::Status &status, const std::string &msg) {
     string errMsg = msg.empty() ? "Got error: " : (msg + " error: ");
-    std::cout << errMsg << status.error_message() << std::endl;
+    std::cout << errMsg << status.error_message() << "\n";
 }
 
 tensorflow::Tensor loadImgTensor(const std::string &path, int w, int h) {

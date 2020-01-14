@@ -12,9 +12,9 @@ endif()
 
 set(
     SOURCE_FILES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/img2tensor.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/img2tensor.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/img2tensor.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/img2tensor.cpp"
 )
 add_executable(example ${SOURCE_FILES})
 

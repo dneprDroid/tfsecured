@@ -12,7 +12,9 @@ WORKDIR app
 COPY tfsecured/cpp tfsecured/cpp
 
 COPY examples/cpp/CMakeLists.txt examples/cpp/
-COPY examples/cpp/*.cpp examples/cpp/
-COPY examples/cpp/*.h examples/cpp/
+COPY examples/cpp/src/*.cpp examples/cpp/src/
+COPY examples/cpp/src/*.h examples/cpp/src/
 
 RUN cmake examples/cpp/ && make -j 5
+
+ENTRYPOINT ["/app/example"]
