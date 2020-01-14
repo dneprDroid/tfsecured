@@ -12,7 +12,7 @@ sudo tar -C /usr/local -xzf ${FILENAME}
 sudo ldconfig /usr/local/lib
 ```
 
-## Build
+## Build and test
 
 ```bash 
 

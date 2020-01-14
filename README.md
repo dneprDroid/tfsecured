@@ -18,20 +18,18 @@ You may use random string with random length like a key, then library calculates
     ...
 
     decryptor, err := tfsecured.NewDecryptorFile(key, path)
-	if err != nil {
-		log.Fatalf("file open failed: %v", err)
-	}
-	graph, err := decryptor.Decrypt()
-	if err != nil {
-		log.Fatalf("decryption failed: %v", err)
-	}
+    if err != nil {
+        log.Fatalf("file open failed: %v", err)
+    }
+    graph, err := decryptor.Decrypt()
+    if err != nil {
+        log.Fatalf("decryption failed: %v", err)
+    }
     // Create session :
-    
-	session, err := tf.NewSession(graph, nil)
-	if err != nil {
-		log.Fatalf("session failed: %v", err)
-	}
-
+    session, err := tf.NewSession(graph, nil)
+    if err != nil {
+        log.Fatalf("session failed: %v", err)
+    }
     // Run session ....
 ```
 
