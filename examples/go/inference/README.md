@@ -21,6 +21,6 @@ go mod download
 go build && \
     ./example \
     -image path/to/digit/image \
-    -model ../../python/demo/models/saved_model-encrypted.pb \
+    -model ../../../python/demo/models/saved_model-encrypted.pb \
     -key BXKE0351PD9TXZ7XA8CK8XZU8XBGDM
 ```

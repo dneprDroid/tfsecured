@@ -108,7 +108,12 @@ func main() {
 		log.Fatalf("session failed: %v", err)
 	}
 	log.Printf("out: %v", output[0])
-	outValue := output[0].Value().([][]float32)
+
+	outTensor := output[0].Value()
+	outValue, ok := outTensor.([][]float32)
+	if !ok {
+		log.Fatalf("Invalid dimension of tensor: %v", outTensor)
+	}
 
 	detectedDigit := -1
 	maxProb := float32(-1) 
