@@ -5,14 +5,12 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-using cv::Mat;
+using namespace cv;
 
-void fillTensor(const std::string &path, int w, int h, float *tensorPtr) {
-
-    Mat img = cv::imread(path, cv::IMREAD_COLOR);
+void fillTensor(const std::string &path, int w, int h, float *tensor) {
+    Mat img = imread(path, IMREAD_COLOR);
     Mat grey;
-    cv::cvtColor(img, grey, cv::COLOR_BGR2GRAY);
-    
-    Mat tensorImg(h, w, CV_32FC1, tensorPtr);
+    cvtColor(img, grey, COLOR_BGR2GRAY);
+    Mat tensorImg(h, w, CV_32FC1, tensor);
     grey.convertTo(tensorImg, CV_32FC1);
 }
