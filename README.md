@@ -37,7 +37,7 @@ You may use random string with random length like a key, then library calculates
 
 Copy sources from [tfsecured](/tfsecured) dir into your project (see [CMakeLists.txt](/examples/cpp/CMakeLists.txt))
  
-C++ usage (see example [main.cpp](/examples/cpp/main.cpp)):
+C++ usage (see example [main.cpp](/examples/cpp/src/main.cpp)):
 
 ```cpp
 
