@@ -40,7 +40,7 @@ func encryptAES(key []byte, data []byte) ([]byte, error) {
 	if _, err = io.ReadFull(rand.Reader, encryptedData[:blockSize]); err != nil {
 		return nil, err
 	}
-	stream := cipher.NewCBCDecrypter(block, encryptedData[:blockSize])
+	stream := cipher.NewCBCEncrypter(block, encryptedData[:blockSize])
 	stream.CryptBlocks(encryptedData[blockSize:], paddedData)
 
 	return encryptedData, nil
@@ -48,7 +48,10 @@ func encryptAES(key []byte, data []byte) ([]byte, error) {
 
 func pad(data []byte, bs int) []byte {
 	rval := bs - len(data) % bs
-	suffix := make([]byte, rval, rval)
+	suffix := make([]byte, rval)
+	for i, _ := range suffix {
+		suffix[i] = byte(rval)
+	}
 	return append(data, suffix...)
 }
 
