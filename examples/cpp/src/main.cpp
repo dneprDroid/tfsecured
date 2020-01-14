@@ -14,7 +14,7 @@ void printError(const Status &status, const string &msg = "");
 Tensor loadImgTensor(const string &path, int w, int h);
 
 int main(int argc, const char * argv[]) {
-    if (argc < 3) {
+    if (argc < 4) {
         std::cout 
             << "Invalid args, usage: "
             << "`./example path/to/encrypted/pb/file " 
